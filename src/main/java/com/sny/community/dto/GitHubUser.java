@@ -1,5 +1,6 @@
 package com.sny.community.dto;
 
+//GitHub返回的用户信息对象类
 public class GitHubUser {
     private String name;
     private Long id;

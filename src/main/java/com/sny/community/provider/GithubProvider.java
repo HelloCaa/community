@@ -11,6 +11,7 @@ import java.io.IOException;
 @Component
 public class GithubProvider {
 
+    //通过okHttp向github发送获得令牌的请求
     public String getAccessToken(AccessTokenDTO accessTokenDTO){
         MediaType mediaType = MediaType.get("application/json; charset=utf-8");
 
@@ -22,6 +23,7 @@ public class GithubProvider {
                     .post(body)
                     .build();
             try (Response response = client.newCall(request).execute()) {
+                //获得的访问令牌
                 String token = response.body().string()
                         .split("&")[0]
                         .split("=")[1];
@@ -41,8 +43,8 @@ public class GithubProvider {
 
         try {
             Response response = client.newCall(request).execute();
-
             String str = response.body().string();
+            //将github返回给我们的用户信息通过JSON这个类转换为我们的GitHubUser对象
             GitHubUser gitHubUser = JSON.parseObject(str, GitHubUser.class);
             return gitHubUser;
         } catch (IOException e) {

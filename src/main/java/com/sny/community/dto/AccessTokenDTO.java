@@ -1,5 +1,6 @@
 package com.sny.community.dto;
 
+//向GitHub拿令牌信息对象类
 public class AccessTokenDTO {
 
     private String client_id;

@@ -1,5 +1,6 @@
 package com.sny.community.model;
 
+//数据库信息对象类
 public class User {
     private Integer id;
     private String name;
