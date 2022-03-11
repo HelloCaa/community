@@ -28,16 +28,17 @@ public class QuestionService {
         PaginationDTO paginationDTO = new PaginationDTO();
         Integer totalCount = questionMapper.count();
         paginationDTO.setPagination(totalCount, size, page);
+        //对page进行有效性验证
         if(page < 1){
             page = 1;
         }
-
         if(page > paginationDTO.getTotalPage()){
             page = paginationDTO.getTotalPage();
         }
 
         //page = size * (page - 1);
         Integer offset = size * (page - 1);
+        //调用dao层获取数据
         List<Question> questions = questionMapper.list(offset, size);
         List<QuestionDTO> questionDTOS = new ArrayList<>();
         for (Question question:questions

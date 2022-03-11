@@ -51,6 +51,7 @@ public class IndexController {
             }
         }
 
+        //根据客户端传过来的当前页码和页面大小获取数据
         PaginationDTO pagination = questionService.list(page, size);
         model.addAttribute("pagination", pagination);
         return "index";

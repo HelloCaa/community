@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
+//用于完成分页查询数据的传送类
 public class PaginationDTO {
     private List<QuestionDTO> questions;
     private boolean showPrevious;
@@ -16,6 +17,7 @@ public class PaginationDTO {
     private List<Integer> pages = new ArrayList<>();
     private Integer totalPage;
 
+    //根据数据库中的问题数计算总页数，并将要显示的页面初始化
     public void setPagination(Integer totalCount, Integer size, Integer page) {
          this.page =page;
          if(totalCount % size == 0){
