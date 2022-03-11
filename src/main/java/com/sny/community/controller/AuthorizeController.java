@@ -56,7 +56,7 @@ public class AuthorizeController {
         //拿我们获得的github令牌取获取用户在github的信息
         GitHubUser gitHubUser = githubProvider.getUser(accessToken);
         //判断，如果成功获得GitHubUser
-        if(gitHubUser != null){
+        if(gitHubUser != null && gitHubUser.getId() != null){
             //将获得的GitHub用户信息对象注入到我们自己网站的User信息对象中
             User user = new User();
             //写我们自己的一个token，用来判断用户是否已经登陆我们自己的网站
