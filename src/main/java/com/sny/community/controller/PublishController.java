@@ -60,7 +60,7 @@ public class PublishController {
         //展示当前用户信息
         User user = null;
         Cookie[] cookies = request.getCookies();
-        if(cookies != null) {
+        if(cookies != null && cookies.length != 0) {
             for (Cookie cookie : cookies
             ) {
                 //判断有没有我们自己的token这个cookie

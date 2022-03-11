@@ -19,7 +19,7 @@ public class IndexController {
     public String hello(HttpServletRequest request){
         //获取用户客户端已有的cookies
         Cookie[] cookies = request.getCookies();
-        if(cookies != null){
+        if(cookies != null && cookies.length != 0){
             for (Cookie cookie:cookies
             ) {
                 //判断有没有我们自己的token这个cookie

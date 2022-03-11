@@ -66,6 +66,7 @@ public class AuthorizeController {
             user.setAccountId(String.valueOf(gitHubUser.getId()));
             user.setGmtCreate(System.currentTimeMillis());
             user.setGmtModified(user.getGmtCreate());
+            user.setAvatarUrl(gitHubUser.getAvatar_url());
             //将用户信息写到数据库
             userMapper.insert(user);
             //登陆成功，将token写到用户浏览器的cookie中，以便用户下次访问
