@@ -1,5 +1,6 @@
 package com.sny.community.service;
 
+import com.sny.community.dto.PaginationDTO;
 import com.sny.community.dto.QuestionDTO;
 import com.sny.community.mapper.QuestionMapper;
 import com.sny.community.mapper.UserMapper;
@@ -22,8 +23,22 @@ public class QuestionService {
     @Resource
     private UserMapper userMapper;
 
-    public List<QuestionDTO> list(){
-        List<Question> questions = questionMapper.list();
+    public PaginationDTO list(Integer page, Integer size){
+
+        PaginationDTO paginationDTO = new PaginationDTO();
+        Integer totalCount = questionMapper.count();
+        paginationDTO.setPagination(totalCount, size, page);
+        if(page < 1){
+            page = 1;
+        }
+
+        if(page > paginationDTO.getTotalPage()){
+            page = paginationDTO.getTotalPage();
+        }
+
+        //page = size * (page - 1);
+        Integer offset = size * (page - 1);
+        List<Question> questions = questionMapper.list(offset, size);
         List<QuestionDTO> questionDTOS = new ArrayList<>();
         for (Question question:questions
              ) {
@@ -35,7 +50,7 @@ public class QuestionService {
             questionDTO.setUser(user);
             questionDTOS.add(questionDTO);
         }
-
-        return  questionDTOS;
+        paginationDTO.setQuestions(questionDTOS);
+        return  paginationDTO;
     }
 }
