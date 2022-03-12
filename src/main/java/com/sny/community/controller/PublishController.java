@@ -1,7 +1,6 @@
 package com.sny.community.controller;
 
 import com.sny.community.mapper.QuestionMapper;
-import com.sny.community.mapper.UserMapper;
 import com.sny.community.model.Question;
 import com.sny.community.model.User;
 import org.springframework.stereotype.Controller;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 //用来处理用户发布问题的Controller
@@ -20,9 +18,6 @@ public class PublishController {
 
     @Resource
     QuestionMapper questionMapper;
-
-    @Resource
-    UserMapper userMapper;
 
     //通过不同的请求方式来返回不同的视图
     @GetMapping("/publish")
@@ -57,26 +52,7 @@ public class PublishController {
             return "publish";
         }
 
-        //展示当前用户信息
-        User user = null;
-        Cookie[] cookies = request.getCookies();
-        if(cookies != null && cookies.length != 0) {
-            for (Cookie cookie : cookies
-            ) {
-                //判断有没有我们自己的token这个cookie
-                if (cookie.getName().equals("token")) {
-                    String token = cookie.getValue();
-                    //判断用户客户端的cookie中的token是否已经在我们的数据库中，
-                    //并从我们的数据库将用户信息返回，以便前端进行用户信息的显示
-                    user = userMapper.findByToken(token);
-                    if (user != null) {
-                        //将信息写到session作用域
-                        request.getSession().setAttribute("user", user);
-                    }
-                    break;
-                }
-            }
-        }
+        User user = (User) request.getSession().getAttribute("user");
 
         if(user == null){
             model.addAttribute("error", "用户未登陆");

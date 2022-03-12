@@ -54,4 +54,28 @@ public class QuestionService {
         paginationDTO.setQuestions(questionDTOS);
         return  paginationDTO;
     }
+
+    public PaginationDTO list(Integer userId, Integer page, Integer size) {
+        PaginationDTO paginationDTO = new PaginationDTO();
+        Integer totalCount = questionMapper.countByUserId(userId);
+        paginationDTO.setPagination(totalCount, size, page);
+        page = paginationDTO.getPage();
+        //page = size * (page - 1);
+        Integer offset = size * (page - 1);
+        //调用dao层获取数据
+        List<Question> questions = questionMapper.listByUserId(userId, offset, size);
+        List<QuestionDTO> questionDTOS = new ArrayList<>();
+        for (Question question:questions
+        ) {
+            //通过question表的creator字段与user表的id（主键自增）字段整合数据
+            User user = userMapper.findById(question.getCreator());
+            QuestionDTO questionDTO = new QuestionDTO();
+            //Spring提供的一个方法，快速的将前者对象里面的属性拷贝到后者目标对象的属性中
+            BeanUtils.copyProperties(question, questionDTO);
+            questionDTO.setUser(user);
+            questionDTOS.add(questionDTO);
+        }
+        paginationDTO.setQuestions(questionDTOS);
+        return  paginationDTO;
+    }
 }

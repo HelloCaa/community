@@ -67,7 +67,7 @@ public class PaginationDTO {
          }
 
          //是否展示最后一页按钮
-        if(pages.contains(totalCount)){
+        if(pages.contains(totalPage)){
             showEndPage = false;
         } else {
             showEndPage = true;
