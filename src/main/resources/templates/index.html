@@ -10,47 +10,7 @@
     <script src="js/bootstrap.min.js" type="application/javascript"></script>
 </head>
 <body>
-<nav class="navbar navbar-default">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                <span class="sr-only">社区</span>
-            </button>
-            <a class="navbar-brand" href="#">社区</a>
-        </div>
-
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <form class="navbar-form navbar-left">
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="搜索问题">
-                </div>
-                <button type="submit" class="btn btn-default">搜索</button>
-            </form>
-            <ul class="nav navbar-nav navbar-right">
-                <li th:if="${session.user != null}">
-                    <a href="/publish">发布</a>
-                </li>
-                <!--如果session里面有user，就显示"用户的name"-->
-                <li class="dropdown" th:if="${session.user != null}">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" th:text="${session.user.getName()}"> <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">消息中心</a></li>
-                        <li><a href="#">个人资料</a></li>
-                        <li><a href="#">退出登陆</a>
-                    </ul>
-                </li>
-                <!--如果session里面没有user，就跳转到github认证的接口"-->
-                <!--https://github.com/login/oauth/authorize github提供的对外认证api -->
-                <!--client_id 在github上申请的客户端id，就是对应我们开发的这款软件 （必填。 您注册 时从 GitHub 收到的客户端 ID。）-->
-                <!--redirect_uri 告诉github完成认证流程后进行跳转的地址（用户获得授权后被发送到的应用程序中的 URL。）-->
-                <!--scope （用空格分隔的作用域列表。 如果未提供，对于未向应用程序授权任何作用域的用户，scope 将默认为空白列表。 对于已向应用程序授权作用域的用户，不会显示含作用域列表的 OAuth 授权页面。 相反，通过用户向应用程序授权的作用域集，此流程步骤将自动完成。 ）-->
-                <!--        例如，如果用户已执行两次 web 流程，且授权了一个拥有 user 作用域的令牌和一个拥有 repo 作用域的令牌，未提供 scope 的第三次 web 流程将收到拥有 user 和 repo 作用域的令牌。-->
-                <!--state (不可猜测的随机字符串。 它用于防止跨站请求伪造攻击。))-->
-                <li th:if="${session.user == null}"><a href="https://github.com/login/oauth/authorize?client_id=f974fcc78bfbc3ecff75&redirect_uri=http://localhost:8887/callback&scope=user&state=1">登陆</a></li>
-            </ul>
-        </div>
-    </div>
-</nav>
+<div th:insert="navigation :: nav"></div>
 <!--用来适配用户不同尺寸时的布局-->
 <div class="container-fluid main" >
     <div class="row">
