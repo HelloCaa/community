@@ -38,6 +38,7 @@ public class QuestionService {
 
         //page = size * (page - 1);
         Integer offset = size * (page - 1);
+
         //调用dao层获取数据
         List<Question> questions = questionMapper.list(offset, size);
         List<QuestionDTO> questionDTOS = new ArrayList<>();
@@ -77,5 +78,14 @@ public class QuestionService {
         }
         paginationDTO.setQuestions(questionDTOS);
         return  paginationDTO;
+    }
+
+    public QuestionDTO getById(Integer id){
+        Question question = questionMapper.getById(id);
+        QuestionDTO questionDTO = new QuestionDTO();
+        BeanUtils.copyProperties(question, questionDTO);
+        User user = userMapper.findById(question.getCreator());
+        questionDTO.setUser(user);
+        return questionDTO;
     }
 }

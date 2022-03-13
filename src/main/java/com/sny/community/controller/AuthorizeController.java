@@ -5,6 +5,7 @@ import com.sny.community.dto.GitHubUser;
 import com.sny.community.mapper.UserMapper;
 import com.sny.community.model.User;
 import com.sny.community.provider.GithubProvider;
+import com.sny.community.service.UserService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,7 +33,7 @@ public class AuthorizeController {
     private String clientUri;
 
     @Resource
-    private UserMapper userMapper;
+    private UserService userService;
 
     //当完成github的认证后跳转到里进行处理
     @GetMapping("/callback")
@@ -64,11 +65,9 @@ public class AuthorizeController {
             user.setToken(token);
             user.setName(gitHubUser.getName());
             user.setAccountId(String.valueOf(gitHubUser.getId()));
-            user.setGmtCreate(System.currentTimeMillis());
-            user.setGmtModified(user.getGmtCreate());
             user.setAvatarUrl(gitHubUser.getAvatar_url());
             //将用户信息写到数据库
-            userMapper.insert(user);
+            userService.createOrUpdate(user);
             //登陆成功，将token写到用户浏览器的cookie中，以便用户下次访问
             response.addCookie(new Cookie("token", token));
             return "redirect:/";
@@ -76,5 +75,17 @@ public class AuthorizeController {
             //登陆失败，重新登陆
             return "redirect:/";
         }
+    }
+
+    //退出登陆
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request, HttpServletResponse response){
+        request.getSession().removeAttribute("user");
+
+        //清空Cookie操作
+        Cookie cookie = new Cookie("token", null);
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
+        return "redirect:/";
     }
 }
