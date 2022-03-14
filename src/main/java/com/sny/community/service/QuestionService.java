@@ -5,7 +5,9 @@ import com.sny.community.dto.QuestionDTO;
 import com.sny.community.mapper.QuestionMapper;
 import com.sny.community.mapper.UserMapper;
 import com.sny.community.model.Question;
+import com.sny.community.model.QuestionExample;
 import com.sny.community.model.User;
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +28,7 @@ public class QuestionService {
     public PaginationDTO list(Integer page, Integer size){
 
         PaginationDTO paginationDTO = new PaginationDTO();
-        Integer totalCount = questionMapper.count();
+        Integer totalCount = (int)questionMapper.countByExample(new QuestionExample());
         paginationDTO.setPagination(totalCount, size, page);
         //对page进行有效性验证
         if(page < 1){
@@ -40,12 +42,12 @@ public class QuestionService {
         Integer offset = size * (page - 1);
 
         //调用dao层获取数据
-        List<Question> questions = questionMapper.list(offset, size);
+        List<Question> questions = questionMapper.selectByExampleWithBLOBsWithRowbounds(new QuestionExample(), new RowBounds(offset, size));
         List<QuestionDTO> questionDTOS = new ArrayList<>();
         for (Question question:questions
              ) {
             //通过question表的creator字段与user表的id（主键自增）字段整合数据
-            User user = userMapper.findById(question.getCreator());
+            User user = userMapper.selectByPrimaryKey(question.getCreator());
             QuestionDTO questionDTO = new QuestionDTO();
             //Spring提供的一个方法，快速的将前者对象里面的属性拷贝到后者目标对象的属性中
             BeanUtils.copyProperties(question, questionDTO);
@@ -58,18 +60,22 @@ public class QuestionService {
 
     public PaginationDTO list(Integer userId, Integer page, Integer size) {
         PaginationDTO paginationDTO = new PaginationDTO();
-        Integer totalCount = questionMapper.countByUserId(userId);
+        QuestionExample questionExample = new QuestionExample();
+        questionExample.createCriteria().andCreatorEqualTo(userId);
+        Integer totalCount = (int)questionMapper.countByExample(questionExample);
         paginationDTO.setPagination(totalCount, size, page);
         page = paginationDTO.getPage();
         //page = size * (page - 1);
         Integer offset = size * (page - 1);
         //调用dao层获取数据
-        List<Question> questions = questionMapper.listByUserId(userId, offset, size);
+        QuestionExample questionExample1 = new QuestionExample();
+        questionExample1.createCriteria().andCreatorEqualTo(userId);
+        List<Question> questions = questionMapper.selectByExampleWithBLOBsWithRowbounds(questionExample1, new RowBounds(offset, size));
         List<QuestionDTO> questionDTOS = new ArrayList<>();
         for (Question question:questions
         ) {
             //通过question表的creator字段与user表的id（主键自增）字段整合数据
-            User user = userMapper.findById(question.getCreator());
+            User user = userMapper.selectByPrimaryKey(question.getCreator());
             QuestionDTO questionDTO = new QuestionDTO();
             //Spring提供的一个方法，快速的将前者对象里面的属性拷贝到后者目标对象的属性中
             BeanUtils.copyProperties(question, questionDTO);
@@ -81,10 +87,10 @@ public class QuestionService {
     }
 
     public QuestionDTO getById(Integer id){
-        Question question = questionMapper.getById(id);
+        Question question = questionMapper.selectByPrimaryKey(id);
         QuestionDTO questionDTO = new QuestionDTO();
         BeanUtils.copyProperties(question, questionDTO);
-        User user = userMapper.findById(question.getCreator());
+        User user = userMapper.selectByPrimaryKey(question.getCreator());
         questionDTO.setUser(user);
         return questionDTO;
     }
@@ -94,11 +100,17 @@ public class QuestionService {
             //在数据库中创建新的问题数据
             question.setGmtCreate(System.currentTimeMillis());
             question.setGmtModified(question.getGmtCreate());
-            questionMapper.create(question);
+            questionMapper.insert(question);
         } else {
             //在数据中更新问题数据
-            question.setGmtModified(question.getGmtCreate());
-            questionMapper.update(question);
+            Question updateQuestion = new Question();
+            updateQuestion.setGmtModified(System.currentTimeMillis());
+            updateQuestion.setTitle(question.getTitle());
+            updateQuestion.setDescription(question.getDescription());
+            updateQuestion.setTag(question.getTag());
+            QuestionExample questionExample = new QuestionExample();
+            questionExample.createCriteria().andIdEqualTo(question.getId());
+            questionMapper.updateByExampleSelective(updateQuestion, questionExample);
         }
     }
 }

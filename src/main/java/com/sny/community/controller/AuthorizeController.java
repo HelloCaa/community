@@ -2,7 +2,6 @@ package com.sny.community.controller;
 
 import com.sny.community.dto.AccessTokenDTO;
 import com.sny.community.dto.GitHubUser;
-import com.sny.community.mapper.UserMapper;
 import com.sny.community.model.User;
 import com.sny.community.provider.GithubProvider;
 import com.sny.community.service.UserService;

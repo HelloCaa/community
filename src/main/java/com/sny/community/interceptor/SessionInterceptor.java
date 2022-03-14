@@ -2,6 +2,7 @@ package com.sny.community.interceptor;
 
 import com.sny.community.mapper.UserMapper;
 import com.sny.community.model.User;
+import com.sny.community.model.UserExample;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -10,6 +11,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 @Service
 public class SessionInterceptor implements HandlerInterceptor {
@@ -29,10 +31,12 @@ public class SessionInterceptor implements HandlerInterceptor {
                     String token = cookie.getValue();
                     //判断用户客户端的cookie中的token是否已经在我们的数据库中，
                     //并从我们的数据库将用户信息返回，以便前端进行用户信息的显示
-                    User user =  userMapper.findByToken(token);
-                    if(user != null){
+                    UserExample userExample = new UserExample();
+                    userExample.createCriteria().andTokenEqualTo(token);
+                    List<User> users = userMapper.selectByExample(userExample);
+                    if(users.size() != 0){
                         //将信息写到session作用域
-                        request.getSession().setAttribute("user", user);
+                        request.getSession().setAttribute("user", users.get(0));
                     }
                     break;
                 }
