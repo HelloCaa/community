@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data //简化set与get方法
 public class Question {
-    private int id;
+    private Integer id;
     private String title;
     private String description;
     private String tag;
