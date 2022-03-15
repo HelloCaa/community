@@ -2,6 +2,8 @@ package com.sny.community.service;
 
 import com.sny.community.dto.PaginationDTO;
 import com.sny.community.dto.QuestionDTO;
+import com.sny.community.exception.CustomizeErrorCode;
+import com.sny.community.exception.CustomizeException;
 import com.sny.community.mapper.QuestionMapper;
 import com.sny.community.mapper.UserMapper;
 import com.sny.community.model.Question;
@@ -88,6 +90,9 @@ public class QuestionService {
 
     public QuestionDTO getById(Integer id){
         Question question = questionMapper.selectByPrimaryKey(id);
+        if (question == null){
+            throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
+        }
         QuestionDTO questionDTO = new QuestionDTO();
         BeanUtils.copyProperties(question, questionDTO);
         User user = userMapper.selectByPrimaryKey(question.getCreator());
@@ -110,7 +115,10 @@ public class QuestionService {
             updateQuestion.setTag(question.getTag());
             QuestionExample questionExample = new QuestionExample();
             questionExample.createCriteria().andIdEqualTo(question.getId());
-            questionMapper.updateByExampleSelective(updateQuestion, questionExample);
+            int updated = questionMapper.updateByExampleSelective(updateQuestion, questionExample);
+            if(updated != 1){
+                throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
+            }
         }
     }
 }
