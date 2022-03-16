@@ -4,6 +4,7 @@ import com.sny.community.dto.PaginationDTO;
 import com.sny.community.dto.QuestionDTO;
 import com.sny.community.exception.CustomizeErrorCode;
 import com.sny.community.exception.CustomizeException;
+import com.sny.community.mapper.QuestionExtMapper;
 import com.sny.community.mapper.QuestionMapper;
 import com.sny.community.mapper.UserMapper;
 import com.sny.community.model.Question;
@@ -23,6 +24,9 @@ public class QuestionService {
 
     @Resource
     private QuestionMapper questionMapper;
+
+    @Resource
+    private QuestionExtMapper questionExtMapper;
 
     @Resource
     private UserMapper userMapper;
@@ -120,5 +124,12 @@ public class QuestionService {
                 throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
             }
         }
+    }
+
+    public void incView(Integer id) {
+        Question question = new Question();
+        question.setId(id);
+        question.setViewCount(1);
+        questionExtMapper.incView(question);
     }
 }

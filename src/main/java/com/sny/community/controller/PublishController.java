@@ -1,7 +1,6 @@
 package com.sny.community.controller;
 
 import com.sny.community.dto.QuestionDTO;
-import com.sny.community.mapper.QuestionMapper;
 import com.sny.community.model.Question;
 import com.sny.community.model.User;
 import com.sny.community.service.QuestionService;

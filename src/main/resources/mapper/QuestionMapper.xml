@@ -8,8 +8,8 @@
     <result column="gmt_modified" jdbcType="BIGINT" property="gmtModified" />
     <result column="creator" jdbcType="INTEGER" property="creator" />
     <result column="comment_count" jdbcType="INTEGER" property="commentCount" />
-    <result column="view_count" jdbcType="VARCHAR" property="viewCount" />
-    <result column="like_count" jdbcType="VARCHAR" property="likeCount" />
+    <result column="view_count" jdbcType="INTEGER" property="viewCount" />
+    <result column="like_count" jdbcType="INTEGER" property="likeCount" />
     <result column="tag" jdbcType="VARCHAR" property="tag" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.sny.community.model.Question">
@@ -135,7 +135,7 @@
       description)
     values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=BIGINT}, 
       #{gmtModified,jdbcType=BIGINT}, #{creator,jdbcType=INTEGER}, #{commentCount,jdbcType=INTEGER}, 
-      #{viewCount,jdbcType=VARCHAR}, #{likeCount,jdbcType=VARCHAR}, #{tag,jdbcType=VARCHAR}, 
+      #{viewCount,jdbcType=INTEGER}, #{likeCount,jdbcType=INTEGER}, #{tag,jdbcType=VARCHAR}, 
       #{description,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.sny.community.model.Question">
@@ -192,10 +192,10 @@
         #{commentCount,jdbcType=INTEGER},
       </if>
       <if test="viewCount != null">
-        #{viewCount,jdbcType=VARCHAR},
+        #{viewCount,jdbcType=INTEGER},
       </if>
       <if test="likeCount != null">
-        #{likeCount,jdbcType=VARCHAR},
+        #{likeCount,jdbcType=INTEGER},
       </if>
       <if test="tag != null">
         #{tag,jdbcType=VARCHAR},
@@ -233,10 +233,10 @@
         comment_count = #{row.commentCount,jdbcType=INTEGER},
       </if>
       <if test="row.viewCount != null">
-        view_count = #{row.viewCount,jdbcType=VARCHAR},
+        view_count = #{row.viewCount,jdbcType=INTEGER},
       </if>
       <if test="row.likeCount != null">
-        like_count = #{row.likeCount,jdbcType=VARCHAR},
+        like_count = #{row.likeCount,jdbcType=INTEGER},
       </if>
       <if test="row.tag != null">
         tag = #{row.tag,jdbcType=VARCHAR},
@@ -257,8 +257,8 @@
       gmt_modified = #{row.gmtModified,jdbcType=BIGINT},
       creator = #{row.creator,jdbcType=INTEGER},
       comment_count = #{row.commentCount,jdbcType=INTEGER},
-      view_count = #{row.viewCount,jdbcType=VARCHAR},
-      like_count = #{row.likeCount,jdbcType=VARCHAR},
+      view_count = #{row.viewCount,jdbcType=INTEGER},
+      like_count = #{row.likeCount,jdbcType=INTEGER},
       tag = #{row.tag,jdbcType=VARCHAR},
       description = #{row.description,jdbcType=LONGVARCHAR}
     <if test="example != null">
@@ -273,8 +273,8 @@
       gmt_modified = #{row.gmtModified,jdbcType=BIGINT},
       creator = #{row.creator,jdbcType=INTEGER},
       comment_count = #{row.commentCount,jdbcType=INTEGER},
-      view_count = #{row.viewCount,jdbcType=VARCHAR},
-      like_count = #{row.likeCount,jdbcType=VARCHAR},
+      view_count = #{row.viewCount,jdbcType=INTEGER},
+      like_count = #{row.likeCount,jdbcType=INTEGER},
       tag = #{row.tag,jdbcType=VARCHAR}
     <if test="example != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -299,10 +299,10 @@
         comment_count = #{commentCount,jdbcType=INTEGER},
       </if>
       <if test="viewCount != null">
-        view_count = #{viewCount,jdbcType=VARCHAR},
+        view_count = #{viewCount,jdbcType=INTEGER},
       </if>
       <if test="likeCount != null">
-        like_count = #{likeCount,jdbcType=VARCHAR},
+        like_count = #{likeCount,jdbcType=INTEGER},
       </if>
       <if test="tag != null">
         tag = #{tag,jdbcType=VARCHAR},
@@ -320,8 +320,8 @@
       gmt_modified = #{gmtModified,jdbcType=BIGINT},
       creator = #{creator,jdbcType=INTEGER},
       comment_count = #{commentCount,jdbcType=INTEGER},
-      view_count = #{viewCount,jdbcType=VARCHAR},
-      like_count = #{likeCount,jdbcType=VARCHAR},
+      view_count = #{viewCount,jdbcType=INTEGER},
+      like_count = #{likeCount,jdbcType=INTEGER},
       tag = #{tag,jdbcType=VARCHAR},
       description = #{description,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
@@ -333,8 +333,8 @@
       gmt_modified = #{gmtModified,jdbcType=BIGINT},
       creator = #{creator,jdbcType=INTEGER},
       comment_count = #{commentCount,jdbcType=INTEGER},
-      view_count = #{viewCount,jdbcType=VARCHAR},
-      like_count = #{likeCount,jdbcType=VARCHAR},
+      view_count = #{viewCount,jdbcType=INTEGER},
+      like_count = #{likeCount,jdbcType=INTEGER},
       tag = #{tag,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>

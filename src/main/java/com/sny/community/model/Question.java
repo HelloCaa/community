@@ -13,9 +13,9 @@ public class Question {
 
     private Integer commentCount;
 
-    private String viewCount;
+    private Integer viewCount;
 
-    private String likeCount;
+    private Integer likeCount;
 
     private String tag;
 
@@ -69,20 +69,20 @@ public class Question {
         this.commentCount = commentCount;
     }
 
-    public String getViewCount() {
+    public Integer getViewCount() {
         return viewCount;
     }
 
-    public void setViewCount(String viewCount) {
-        this.viewCount = viewCount == null ? null : viewCount.trim();
+    public void setViewCount(Integer viewCount) {
+        this.viewCount = viewCount;
     }
 
-    public String getLikeCount() {
+    public Integer getLikeCount() {
         return likeCount;
     }
 
-    public void setLikeCount(String likeCount) {
-        this.likeCount = likeCount == null ? null : likeCount.trim();
+    public void setLikeCount(Integer likeCount) {
+        this.likeCount = likeCount;
     }
 
     public String getTag() {

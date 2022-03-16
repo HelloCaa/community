@@ -484,62 +484,52 @@ public class QuestionExample {
             return (Criteria) this;
         }
 
-        public Criteria andViewCountEqualTo(String value) {
+        public Criteria andViewCountEqualTo(Integer value) {
             addCriterion("view_count =", value, "viewCount");
             return (Criteria) this;
         }
 
-        public Criteria andViewCountNotEqualTo(String value) {
+        public Criteria andViewCountNotEqualTo(Integer value) {
             addCriterion("view_count <>", value, "viewCount");
             return (Criteria) this;
         }
 
-        public Criteria andViewCountGreaterThan(String value) {
+        public Criteria andViewCountGreaterThan(Integer value) {
             addCriterion("view_count >", value, "viewCount");
             return (Criteria) this;
         }
 
-        public Criteria andViewCountGreaterThanOrEqualTo(String value) {
+        public Criteria andViewCountGreaterThanOrEqualTo(Integer value) {
             addCriterion("view_count >=", value, "viewCount");
             return (Criteria) this;
         }
 
-        public Criteria andViewCountLessThan(String value) {
+        public Criteria andViewCountLessThan(Integer value) {
             addCriterion("view_count <", value, "viewCount");
             return (Criteria) this;
         }
 
-        public Criteria andViewCountLessThanOrEqualTo(String value) {
+        public Criteria andViewCountLessThanOrEqualTo(Integer value) {
             addCriterion("view_count <=", value, "viewCount");
             return (Criteria) this;
         }
 
-        public Criteria andViewCountLike(String value) {
-            addCriterion("view_count like", value, "viewCount");
-            return (Criteria) this;
-        }
-
-        public Criteria andViewCountNotLike(String value) {
-            addCriterion("view_count not like", value, "viewCount");
-            return (Criteria) this;
-        }
-
-        public Criteria andViewCountIn(List<String> values) {
+        public Criteria andViewCountIn(List<Integer> values) {
             addCriterion("view_count in", values, "viewCount");
             return (Criteria) this;
         }
 
-        public Criteria andViewCountNotIn(List<String> values) {
+        public Criteria andViewCountNotIn(List<Integer> values) {
             addCriterion("view_count not in", values, "viewCount");
             return (Criteria) this;
         }
 
-        public Criteria andViewCountBetween(String value1, String value2) {
+        public Criteria andViewCountBetween(Integer value1, Integer value2) {
             addCriterion("view_count between", value1, value2, "viewCount");
             return (Criteria) this;
         }
 
-        public Criteria andViewCountNotBetween(String value1, String value2) {
+        public Criteria andViewCountNotBetween(Integer value1, Integer value2) {
             addCriterion("view_count not between", value1, value2, "viewCount");
             return (Criteria) this;
         }
@@ -554,62 +544,52 @@ public class QuestionExample {
             return (Criteria) this;
         }
 
-        public Criteria andLikeCountEqualTo(String value) {
+        public Criteria andLikeCountEqualTo(Integer value) {
             addCriterion("like_count =", value, "likeCount");
             return (Criteria) this;
         }
 
-        public Criteria andLikeCountNotEqualTo(String value) {
+        public Criteria andLikeCountNotEqualTo(Integer value) {
             addCriterion("like_count <>", value, "likeCount");
             return (Criteria) this;
         }
 
-        public Criteria andLikeCountGreaterThan(String value) {
+        public Criteria andLikeCountGreaterThan(Integer value) {
             addCriterion("like_count >", value, "likeCount");
             return (Criteria) this;
         }
 
-        public Criteria andLikeCountGreaterThanOrEqualTo(String value) {
+        public Criteria andLikeCountGreaterThanOrEqualTo(Integer value) {
             addCriterion("like_count >=", value, "likeCount");
             return (Criteria) this;
         }
 
-        public Criteria andLikeCountLessThan(String value) {
+        public Criteria andLikeCountLessThan(Integer value) {
             addCriterion("like_count <", value, "likeCount");
             return (Criteria) this;
         }
 
-        public Criteria andLikeCountLessThanOrEqualTo(String value) {
+        public Criteria andLikeCountLessThanOrEqualTo(Integer value) {
             addCriterion("like_count <=", value, "likeCount");
             return (Criteria) this;
         }
 
-        public Criteria andLikeCountLike(String value) {
-            addCriterion("like_count like", value, "likeCount");
-            return (Criteria) this;
-        }
-
-        public Criteria andLikeCountNotLike(String value) {
-            addCriterion("like_count not like", value, "likeCount");
-            return (Criteria) this;
-        }
-
-        public Criteria andLikeCountIn(List<String> values) {
+        public Criteria andLikeCountIn(List<Integer> values) {
             addCriterion("like_count in", values, "likeCount");
             return (Criteria) this;
         }
 
-        public Criteria andLikeCountNotIn(List<String> values) {
+        public Criteria andLikeCountNotIn(List<Integer> values) {
             addCriterion("like_count not in", values, "likeCount");
             return (Criteria) this;
         }
 
-        public Criteria andLikeCountBetween(String value1, String value2) {
+        public Criteria andLikeCountBetween(Integer value1, Integer value2) {
             addCriterion("like_count between", value1, value2, "likeCount");
             return (Criteria) this;
         }
 
-        public Criteria andLikeCountNotBetween(String value1, String value2) {
+        public Criteria andLikeCountNotBetween(Integer value1, Integer value2) {
             addCriterion("like_count not between", value1, value2, "likeCount");
             return (Criteria) this;
         }

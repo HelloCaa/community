@@ -1,7 +1,6 @@
 package com.sny.community.controller;
 
 import com.sny.community.dto.QuestionDTO;
-import com.sny.community.mapper.QuestionMapper;
 import com.sny.community.service.QuestionService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +17,8 @@ public class QuestionController {
 
     @GetMapping("/question/{id}")
     public String question(@PathVariable(name = "id") Integer id, Model model){
+        //累加阅读数
+        questionService.incView(id);
         QuestionDTO questionDTO = questionService.getById(id);
         model.addAttribute("question", questionDTO);
         return "question";

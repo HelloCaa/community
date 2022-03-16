@@ -18,7 +18,7 @@
       <h4><span th:text="${question.title}"></span></h4>
         作者：<sapn th:text="${question.user.name}"></sapn> |
         发布时间：<sapn th:text="${#dates.format(question.gmtCreate,'yyyy MMMM dd HH:mm')}"></sapn> |
-        阅读数：<span th:text="${question.viewCount}"></span>
+        阅读数：<span th:text="${question.getViewCount()}"></span>
       </span>
       <hr>
       <div class="col-lg-3 col-md-12 col-sm-12 col-xm-12 " th:text="${question.description}"></div>
