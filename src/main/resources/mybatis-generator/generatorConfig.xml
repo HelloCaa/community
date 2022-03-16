@@ -49,7 +49,8 @@
         </javaClientGenerator>
         <!-- 指定数据库表 -->
         <table schema="" tableName="user"></table>
-        <table schema="" tableName="Question"></table>
+        <table schema="" tableName="question"></table>
+        <table schema="" tableName="comment"></table>
 
 
 
