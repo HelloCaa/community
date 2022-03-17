@@ -109,7 +109,8 @@ public class QuestionService {
             //在数据库中创建新的问题数据
             question.setGmtCreate(System.currentTimeMillis());
             question.setGmtModified(question.getGmtCreate());
-            questionMapper.insert(question);
+            question.setId(null);
+            questionMapper.insertSelective(question);
         } else {
             //在数据中更新问题数据
             Question updateQuestion = new Question();

@@ -5,6 +5,14 @@ public enum CommentTypeEnum {
     COMMENT(2);
     private int type;
 
+    public static boolean isExist(Integer type) {
+        for (CommentTypeEnum commentTypeEnum : CommentTypeEnum.values()) {
+            if(commentTypeEnum.getType() == type)
+                return true;
+        }
+        return false;
+    }
+
     public int getType() {
         return type;
     }

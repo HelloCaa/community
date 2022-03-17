@@ -20,7 +20,7 @@ public class ResultDTO {
         return errorOf(errorCode.getCode(), errorCode.getMessage());
     }
 
-    public static Object errorOf(CustomizeException e) {
+    public static ResultDTO errorOf(CustomizeException e) {
         return errorOf(e.getCode(), e.getMessage());
     }
 

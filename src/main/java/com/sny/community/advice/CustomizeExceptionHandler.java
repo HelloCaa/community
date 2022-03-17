@@ -1,5 +1,6 @@
 package com.sny.community.advice;
 
+import com.alibaba.fastjson.JSON;
 import com.mysql.cj.util.StringUtils;
 import com.sny.community.dto.ResultDTO;
 import com.sny.community.exception.CustomizeErrorCode;
@@ -14,24 +15,39 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 @ControllerAdvice()
 public class CustomizeExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ResponseBody
     @ExceptionHandler(Exception.class)
-    public Object handleControllerException(Throwable e, Model model, HttpServletRequest request) {
+    public ModelAndView handleControllerException(Throwable e, Model model, HttpServletRequest request, HttpServletResponse response) {
 
         String contentType = request.getContentType();
 
         if("application/json".equals(contentType)){
+            ResultDTO resultDTO;
             //返回json
             if(e instanceof com.sny.community.exception.CustomizeException){
-                return ResultDTO.errorOf((CustomizeException) e);
+                resultDTO = ResultDTO.errorOf((CustomizeException) e);
             }else {
                 //显示不出来
-                return ResultDTO.errorOf(CustomizeErrorCode.SYSTEM_ERROR);
+                resultDTO = ResultDTO.errorOf(CustomizeErrorCode.SYSTEM_ERROR);
             }
+
+            try {
+                response.setCharacterEncoding("UTF-8");
+                response.setContentType("application/json");
+                response.setStatus(200);
+                PrintWriter writer = response.getWriter();
+                writer.write(JSON.toJSONString(resultDTO));
+                writer.close();
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+            return null;
         }else {
             //错误页面跳转
             if(e instanceof com.sny.community.exception.CustomizeException){
@@ -43,12 +59,5 @@ public class CustomizeExceptionHandler extends ResponseEntityExceptionHandler {
             return new ModelAndView("error");
         }
     }
-
-    private HttpStatus getStatus(HttpServletRequest request) {
-        Integer code = (Integer) request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
-        HttpStatus status = HttpStatus.resolve(code);
-        return (status != null) ? status : HttpStatus.INTERNAL_SERVER_ERROR;
-    }
-
 }
 
