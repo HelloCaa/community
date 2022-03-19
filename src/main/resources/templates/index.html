@@ -9,6 +9,15 @@
     <script src="js/jQuery.js" type="application/javascript"></script>
     <script src="js/bootstrap.min.js" type="application/javascript"></script>
 </head>
+<script type="application/javascript">
+    window.onload = function () {
+        let closable = window.localStorage.getItem("closable");
+        if(closable == "true"){
+            window.close()
+            window.localStorage.removeItem("closable");
+        }
+    }
+</script>
 <body>
 <div th:insert="navigation :: nav"></div>
 <!--用来适配用户不同尺寸时的布局-->
@@ -29,7 +38,7 @@
                         <a th:href="@{'/question/'+${question.id}}" th:text="${question.title}"></a>
                     </h4>
                     <span th:text="${question.description}"></span><br>
-                    <span class="text-desc"><span th:text="${question.commentCount}"></span> 个回复 • <span th:text="${question.viewCount}"></span> 次浏览 • <sapn th:text="${#dates.format(question.gmtCreate,'yyyy MMMM dd HH:mm')}"></sapn> </span>
+                    <span class="text-desc"><span th:text="${question.commentCount}"></span> 个回复 • <span th:text="${question.viewCount}"></span> 次浏览 • <sapn th:text="${#dates.format(question.gmtCreate,'yyyy-MM-dd HH:mm')}"></sapn> </span>
                 </div>
             </div>
             <nav aria-label="Page navigation">
