@@ -7,7 +7,7 @@ public class Comment {
 
     private Integer type;
 
-    private Integer commentor;
+    private Integer commentator;
 
     private Long gmtCreate;
 
@@ -41,12 +41,12 @@ public class Comment {
         this.type = type;
     }
 
-    public Integer getCommentor() {
-        return commentor;
+    public Integer getCommentator() {
+        return commentator;
     }
 
-    public void setCommentor(Integer commentor) {
-        this.commentor = commentor;
+    public void setCommentator(Integer commentator) {
+        this.commentator = commentator;
     }
 
     public Long getGmtCreate() {

@@ -284,63 +284,63 @@ public class CommentExample {
             return (Criteria) this;
         }
 
-        public Criteria andCommentorIsNull() {
-            addCriterion("commentor is null");
+        public Criteria andCommentatorIsNull() {
+            addCriterion("commentator is null");
             return (Criteria) this;
         }
 
-        public Criteria andCommentorIsNotNull() {
-            addCriterion("commentor is not null");
+        public Criteria andCommentatorIsNotNull() {
+            addCriterion("commentator is not null");
             return (Criteria) this;
         }
 
-        public Criteria andCommentorEqualTo(Integer value) {
-            addCriterion("commentor =", value, "commentor");
+        public Criteria andCommentatorEqualTo(Integer value) {
+            addCriterion("commentator =", value, "commentator");
             return (Criteria) this;
         }
 
-        public Criteria andCommentorNotEqualTo(Integer value) {
-            addCriterion("commentor <>", value, "commentor");
+        public Criteria andCommentatorNotEqualTo(Integer value) {
+            addCriterion("commentator <>", value, "commentator");
             return (Criteria) this;
         }
 
-        public Criteria andCommentorGreaterThan(Integer value) {
-            addCriterion("commentor >", value, "commentor");
+        public Criteria andCommentatorGreaterThan(Integer value) {
+            addCriterion("commentator >", value, "commentator");
             return (Criteria) this;
         }
 
-        public Criteria andCommentorGreaterThanOrEqualTo(Integer value) {
-            addCriterion("commentor >=", value, "commentor");
+        public Criteria andCommentatorGreaterThanOrEqualTo(Integer value) {
+            addCriterion("commentator >=", value, "commentator");
             return (Criteria) this;
         }
 
-        public Criteria andCommentorLessThan(Integer value) {
-            addCriterion("commentor <", value, "commentor");
+        public Criteria andCommentatorLessThan(Integer value) {
+            addCriterion("commentator <", value, "commentator");
             return (Criteria) this;
         }
 
-        public Criteria andCommentorLessThanOrEqualTo(Integer value) {
-            addCriterion("commentor <=", value, "commentor");
+        public Criteria andCommentatorLessThanOrEqualTo(Integer value) {
+            addCriterion("commentator <=", value, "commentator");
             return (Criteria) this;
         }
 
-        public Criteria andCommentorIn(List<Integer> values) {
-            addCriterion("commentor in", values, "commentor");
+        public Criteria andCommentatorIn(List<Integer> values) {
+            addCriterion("commentator in", values, "commentator");
             return (Criteria) this;
         }
 
-        public Criteria andCommentorNotIn(List<Integer> values) {
-            addCriterion("commentor not in", values, "commentor");
+        public Criteria andCommentatorNotIn(List<Integer> values) {
+            addCriterion("commentator not in", values, "commentator");
             return (Criteria) this;
         }
 
-        public Criteria andCommentorBetween(Integer value1, Integer value2) {
-            addCriterion("commentor between", value1, value2, "commentor");
+        public Criteria andCommentatorBetween(Integer value1, Integer value2) {
+            addCriterion("commentator between", value1, value2, "commentator");
             return (Criteria) this;
         }
 
-        public Criteria andCommentorNotBetween(Integer value1, Integer value2) {
-            addCriterion("commentor not between", value1, value2, "commentor");
+        public Criteria andCommentatorNotBetween(Integer value1, Integer value2) {
+            addCriterion("commentator not between", value1, value2, "commentator");
             return (Criteria) this;
         }
 

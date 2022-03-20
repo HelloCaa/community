@@ -5,7 +5,7 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="parent_id" jdbcType="INTEGER" property="parentId" />
     <result column="type" jdbcType="INTEGER" property="type" />
-    <result column="commentor" jdbcType="INTEGER" property="commentor" />
+    <result column="commentator" jdbcType="INTEGER" property="commentator" />
     <result column="gmt_create" jdbcType="BIGINT" property="gmtCreate" />
     <result column="gmt_modified" jdbcType="BIGINT" property="gmtModified" />
     <result column="like_count" jdbcType="INTEGER" property="likeCount" />
@@ -70,7 +70,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, parent_id, type, commentor, gmt_create, gmt_modified, like_count, content
+    id, parent_id, type, commentator, gmt_create, gmt_modified, like_count, content
   </sql>
   <select id="selectByExample" parameterType="com.sny.community.model.CommentExample" resultMap="BaseResultMap">
     select
@@ -104,10 +104,10 @@
   </delete>
   <insert id="insert" parameterType="com.sny.community.model.Comment">
     insert into comment (id, parent_id, type, 
-      commentor, gmt_create, gmt_modified, 
+      commentator, gmt_create, gmt_modified, 
       like_count, content)
     values (#{id,jdbcType=INTEGER}, #{parentId,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, 
-      #{commentor,jdbcType=INTEGER}, #{gmtCreate,jdbcType=BIGINT}, #{gmtModified,jdbcType=BIGINT}, 
+      #{commentator,jdbcType=INTEGER}, #{gmtCreate,jdbcType=BIGINT}, #{gmtModified,jdbcType=BIGINT}, 
       #{likeCount,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.sny.community.model.Comment">
@@ -122,8 +122,8 @@
       <if test="type != null">
         type,
       </if>
-      <if test="commentor != null">
-        commentor,
+      <if test="commentator != null">
+        commentator,
       </if>
       <if test="gmtCreate != null">
         gmt_create,
@@ -148,8 +148,8 @@
       <if test="type != null">
         #{type,jdbcType=INTEGER},
       </if>
-      <if test="commentor != null">
-        #{commentor,jdbcType=INTEGER},
+      <if test="commentator != null">
+        #{commentator,jdbcType=INTEGER},
       </if>
       <if test="gmtCreate != null">
         #{gmtCreate,jdbcType=BIGINT},
@@ -183,8 +183,8 @@
       <if test="row.type != null">
         type = #{row.type,jdbcType=INTEGER},
       </if>
-      <if test="row.commentor != null">
-        commentor = #{row.commentor,jdbcType=INTEGER},
+      <if test="row.commentator != null">
+        commentator = #{row.commentator,jdbcType=INTEGER},
       </if>
       <if test="row.gmtCreate != null">
         gmt_create = #{row.gmtCreate,jdbcType=BIGINT},
@@ -208,7 +208,7 @@
     set id = #{row.id,jdbcType=INTEGER},
       parent_id = #{row.parentId,jdbcType=INTEGER},
       type = #{row.type,jdbcType=INTEGER},
-      commentor = #{row.commentor,jdbcType=INTEGER},
+      commentator = #{row.commentator,jdbcType=INTEGER},
       gmt_create = #{row.gmtCreate,jdbcType=BIGINT},
       gmt_modified = #{row.gmtModified,jdbcType=BIGINT},
       like_count = #{row.likeCount,jdbcType=INTEGER},
@@ -226,8 +226,8 @@
       <if test="type != null">
         type = #{type,jdbcType=INTEGER},
       </if>
-      <if test="commentor != null">
-        commentor = #{commentor,jdbcType=INTEGER},
+      <if test="commentator != null">
+        commentator = #{commentator,jdbcType=INTEGER},
       </if>
       <if test="gmtCreate != null">
         gmt_create = #{gmtCreate,jdbcType=BIGINT},
@@ -248,7 +248,7 @@
     update comment
     set parent_id = #{parentId,jdbcType=INTEGER},
       type = #{type,jdbcType=INTEGER},
-      commentor = #{commentor,jdbcType=INTEGER},
+      commentator = #{commentator,jdbcType=INTEGER},
       gmt_create = #{gmtCreate,jdbcType=BIGINT},
       gmt_modified = #{gmtModified,jdbcType=BIGINT},
       like_count = #{likeCount,jdbcType=INTEGER},
