@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 //写一个Service层，用来将Dao层获得到的数据进行进一步整合和封装，以便在Controller层直接调用
@@ -49,6 +50,7 @@ public class QuestionService {
 
         //调用dao层获取数据
         List<Question> questions = questionMapper.selectByExampleWithBLOBsWithRowbounds(new QuestionExample(), new RowBounds(offset, size));
+
         List<QuestionDTO> questionDTOS = new ArrayList<>();
         for (Question question:questions
              ) {
