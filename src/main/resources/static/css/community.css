@@ -36,6 +36,18 @@ body{
     margin-bottom: 15px;
 }
 
+.sub-comments {
+    margin-top: 10px;
+    border: 1px solid #efefef;
+    padding-top: 15px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+.sub-comments .btn{
+    margin: 10px 0;
+}
+
 .community-menu {
     color: #999;
     font-size: 13px;
@@ -64,6 +76,10 @@ body{
     margin-right: 6px;
     font-size: 15px;
     cursor: pointer;
+}
+
+.menu .active {
+    color: #499ef3;
 }
 
 .menu .icon:hover {

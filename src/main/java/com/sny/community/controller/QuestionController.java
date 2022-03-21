@@ -1,8 +1,8 @@
 package com.sny.community.controller;
 
-import com.sny.community.dto.CommentCreateDTO;
 import com.sny.community.dto.CommentDTO;
 import com.sny.community.dto.QuestionDTO;
+import com.sny.community.enums.CommentTypeEnum;
 import com.sny.community.service.CommentService;
 import com.sny.community.service.QuestionService;
 import org.springframework.stereotype.Controller;
@@ -26,7 +26,7 @@ public class QuestionController {
     public String question(@PathVariable(name = "id") Integer id, Model model){
         QuestionDTO questionDTO = questionService.getById(id);
 
-        List<CommentDTO> comments = commentService.listByQuestionId(id);
+        List<CommentDTO> comments = commentService.listByTargetId(id, CommentTypeEnum.QUESTION);
         //累加阅读数
         questionService.incView(id);
         model.addAttribute("question", questionDTO);

@@ -1,7 +1,9 @@
 package com.sny.community.controller;
 
 import com.sny.community.dto.CommentCreateDTO;
+import com.sny.community.dto.CommentDTO;
 import com.sny.community.dto.ResultDTO;
+import com.sny.community.enums.CommentTypeEnum;
 import com.sny.community.exception.CustomizeErrorCode;
 import com.sny.community.model.Comment;
 import com.sny.community.model.User;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Controller
 public class CommentController {
@@ -40,5 +43,12 @@ public class CommentController {
         comment.setCommentator(user.getId());
         commentService.insert(comment);
         return ResultDTO.okOf();
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/comment/{id}", method = RequestMethod.GET)
+    public ResultDTO<List<CommentDTO>> comments(@PathVariable(name = "id") Integer id){
+        List<CommentDTO> commentDTOS = commentService.listByTargetId(id, CommentTypeEnum.COMMENT);
+        return ResultDTO.okOf(commentDTOS);
     }
 }
