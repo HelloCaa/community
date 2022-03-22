@@ -11,7 +11,6 @@ function post(){
 
 function comment2Target(targetId, type, content) {
 
-    debugger
     if(!content){
         alert("不能回复空内容～～")
         return;
@@ -48,7 +47,6 @@ function comment2Target(targetId, type, content) {
 }
 
 function comment(e) {
-    debugger
     let commentId = e.getAttribute("data-id")
     let content = $("#input-"+commentId).val();
     comment2Target(commentId, 2, content)
@@ -69,24 +67,15 @@ function collapseComments(e){
         e.classList.remove("active")
     } else {
         $.getJSON( "/comment/"+id, function( data ) {
-            console.log(data)
-
-            let commentBody = $("comment-body-"+id);
-            let items = [];
-
-            $.each( data.data, function(comment) {
+            let subCommentContainer = $("#comment-"+id)
+            $.each( data.data, function(index, comment) {
+                console.log(comment)
                 let c = $("<div/>", {
                     "class": "col-lg-12 col-md-12 col-sm-12 col-xm-12 comments",
                     html: comment.content
                 })
-                items.push(c);
+                subCommentContainer.prepend(c)
             });
-
-            commentBody.appendChild($("<div/>", {
-                    "class": "col-lg-12 col-md-12 col-sm-12 col-xm-12 collapse sub-comments",
-                    "id": "comment-" + id,
-                    html: items.join("")
-                }))
 
             //展开二级评论
             comments.addClass("in");
