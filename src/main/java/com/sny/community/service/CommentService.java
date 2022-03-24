@@ -4,10 +4,7 @@ import com.sny.community.dto.CommentDTO;
 import com.sny.community.enums.CommentTypeEnum;
 import com.sny.community.exception.CustomizeErrorCode;
 import com.sny.community.exception.CustomizeException;
-import com.sny.community.mapper.CommentMapper;
-import com.sny.community.mapper.QuestionExtMapper;
-import com.sny.community.mapper.QuestionMapper;
-import com.sny.community.mapper.UserMapper;
+import com.sny.community.mapper.*;
 import com.sny.community.model.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -35,6 +32,9 @@ public class CommentService {
     @Resource
     private UserMapper userMapper;
 
+    @Resource
+    private CommentExtMapper commentExtMapper;
+
     @Transactional
     public void insert(Comment comment) {
         if(comment.getParentId() == null || comment.getCommentator() == 0){
@@ -52,6 +52,12 @@ public class CommentService {
                 throw new CustomizeException(CustomizeErrorCode.COMMENT_NOT_FOUND);
             }
             commentMapper.insertSelective(comment);
+
+            //增加评论数
+            Comment parentComment = new Comment();
+            parentComment.setId(comment.getParentId());
+            parentComment.setCommentCount(1);
+            commentExtMapper.incCommentCount(parentComment);
         }else {
             //回复问题
             Question question = questionMapper.selectByPrimaryKey(comment.getParentId());
