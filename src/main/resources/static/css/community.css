@@ -55,6 +55,10 @@ body{
     margin-bottom: 15px;
 }
 
+.question-tag {
+    margin-right: 5px;
+}
+
 .jumbotron {
     margin: 50px;
 }
