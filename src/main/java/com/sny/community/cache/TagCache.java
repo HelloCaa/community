@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class TagCache {
-    public List<TagDTO> get(){
+    public static List<TagDTO> get(){
         List<TagDTO> tagDTOS = new ArrayList<>();
         TagDTO program = new TagDTO();
         program.setCategoryName("开发语言");

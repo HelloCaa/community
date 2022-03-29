@@ -1,5 +1,6 @@
 package com.sny.community.controller;
 
+import com.sny.community.cache.TagCache;
 import com.sny.community.dto.QuestionDTO;
 import com.sny.community.model.Question;
 import com.sny.community.model.User;
@@ -25,6 +26,7 @@ public class PublishController {
     @GetMapping("/publish")
     public String publish(Model model){
         model.addAttribute("id", -1);
+        model.addAttribute("tags", TagCache.get());
         return "publish";
     }
 
@@ -41,6 +43,7 @@ public class PublishController {
         model.addAttribute("title", title);
         model.addAttribute("description", description);
         model.addAttribute("tag", tag);
+        model.addAttribute("tags", TagCache.get());
 
         //判断用在页面输入数据的有效性
         if(title == null || title == ""){
@@ -81,8 +84,7 @@ public class PublishController {
         model.addAttribute("description", question.getDescription());
         model.addAttribute("tag", question.getTag());
         model.addAttribute("id", question.getId());
-
-        model.addAttribute("tags", "");
+        model.addAttribute("tags", TagCache.get());
         return "publish";
     }
 }
