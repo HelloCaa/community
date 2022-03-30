@@ -5,6 +5,7 @@ import com.sny.community.dto.QuestionDTO;
 import com.sny.community.model.Question;
 import com.sny.community.model.User;
 import com.sny.community.service.QuestionService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -58,7 +59,11 @@ public class PublishController {
             model.addAttribute("error", "tag不能为空");
             return "publish";
         }
-
+        String invalid = TagCache.filterInvalid(tag);
+        if(!StringUtils.isBlank(invalid)){
+            model.addAttribute("error", "输入非法标签:" + invalid);
+            return "publish";
+        }
         User user = (User) request.getSession().getAttribute("user");
 
         if(user == null){
