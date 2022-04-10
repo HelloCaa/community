@@ -2,6 +2,7 @@ package com.sny.community.controller;
 
 import com.sny.community.dto.PaginationDTO;
 import com.sny.community.model.User;
+import com.sny.community.service.NotificationService;
 import com.sny.community.service.QuestionService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +18,9 @@ public class ProfileController {
 
     @Resource
     QuestionService questionService;
+
+    @Resource
+    NotificationService notificationService;
 
     @GetMapping("/profile/{action}")
     public String profile(@PathVariable(name = "action") String action,
@@ -37,7 +41,7 @@ public class ProfileController {
             PaginationDTO paginationDTO = questionService.list(user.getId(), page, size);
             model.addAttribute("pagination", paginationDTO);
         }else if ("replies".equals(action)){
-            PaginationDTO paginationDTO = questionService.list(user.getId(), page, size);
+            PaginationDTO paginationDTO = notificationService.list(user.getId(), page, size);
             model.addAttribute("pagination", paginationDTO);
             model.addAttribute("section", "replies");
             model.addAttribute("sectionName", "最新回复");

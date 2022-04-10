@@ -3,6 +3,7 @@ package com.sny.community.interceptor;
 import com.sny.community.mapper.UserMapper;
 import com.sny.community.model.User;
 import com.sny.community.model.UserExample;
+import com.sny.community.service.NotificationService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -18,6 +19,9 @@ public class SessionInterceptor implements HandlerInterceptor {
 
     @Resource
     private UserMapper userMapper;
+
+    @Resource
+    private NotificationService notificationService;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -37,6 +41,8 @@ public class SessionInterceptor implements HandlerInterceptor {
                     if(users.size() != 0){
                         //将信息写到session作用域
                         request.getSession().setAttribute("user", users.get(0));
+                        Long unreadCount = notificationService.unreadCount(users.get(0).getId());
+                        request.getSession().setAttribute("unreadCount", unreadCount);
                     }
                     break;
                 }
