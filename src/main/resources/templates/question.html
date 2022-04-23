@@ -76,11 +76,14 @@
             </h5>
             <div th:text="${comment.content}"></div>
             <div class="menu">
-              <span class="glyphicon glyphicon-thumbs-up icon"></span>
+              <span class="glyphicon glyphicon-heart icon"
+                    th:data-id="${comment.id}"
+                    onclick="comment_click(this)"><span th:id="likeCount + ${comment.id}"  th:text="${comment.likeCount}" ></span>
+              </span>
               <span th:data-id="${comment.id}"
                     onclick="collapseComments(this)" class="comment-icon">
-                <span class="glyphicon glyphicon-comment"></span>
-                <span th:text="${comment.commentCount}"></span>
+                <span class="glyphicon glyphicon-comment" th:text="${comment.commentCount}">
+                </span>
               </span>
               <sapn class="pull-right" th:text="${#dates.format(comment.gmtCreate,'yyyy-MM-dd')}"></sapn>
             </div>
@@ -100,12 +103,12 @@
         <div class="media" >
           <div class="media-left">
             <a href="#">
-              <img class="media-object img-rounded" th:src="${session.user.getAvatarUrl}" >
+              <img class="media-object img-rounded" th:src="${session.user != null ? session.user.getAvatarUrl : '/img/default-avatar.png'}" >
             </a>
           </div>
           <div class="media-body">
             <h5 class="media-heading" >
-              <span th:text="${session.user.name}"></span>
+              <span th:text="${session.user != null ? session.user.getName() : 'DefaultName'}"></span>
             </h5>
           </div>
         </div>

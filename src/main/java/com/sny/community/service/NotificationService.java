@@ -28,7 +28,9 @@ public class NotificationService {
 
     public PaginationDTO list(Integer userId, Integer page, Integer size) {
         PaginationDTO<NotificationDTO> paginationDTO = new PaginationDTO();
-        Integer totalCount = (int)notificationMapper.countByExample(new NotificationExample());
+        NotificationExample notificationExample = new NotificationExample();
+        notificationExample.createCriteria().andReceiverEqualTo(userId);
+        Integer totalCount = (int)notificationMapper.countByExample(notificationExample);
         paginationDTO.setPagination(totalCount, size, page);
         //对page进行有效性验证
         if(page < 1){
@@ -44,6 +46,7 @@ public class NotificationService {
         //调用dao层获取数据
         NotificationExample example = new NotificationExample();
         example.createCriteria().andReceiverEqualTo(userId);
+        example.setOrderByClause("gmt_create desc");
         List<Notification> notifications = notificationMapper.selectByExampleWithRowbounds(example, new RowBounds(offset, size)).stream().sorted((x, y) -> -x.getGmtCreate().compareTo(y.getGmtCreate())).collect(Collectors.toList());;
 
         if(notifications.size() == 0){

@@ -128,4 +128,11 @@ public class CommentService {
 
         return commentDTOS;
     }
+
+    public Integer increaseLikeCount(Integer id){
+        Comment comment = commentMapper.selectByPrimaryKey(id);
+        comment.setLikeCount(comment.getLikeCount() + 1);
+        commentMapper.updateByPrimaryKey(comment);
+        return comment.getLikeCount();
+    }
 }

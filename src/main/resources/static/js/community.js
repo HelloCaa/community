@@ -134,3 +134,21 @@ function selectTag(e){
 function showSelectTag(){
     $("#select-tag").show()
 }
+
+function comment_click(e){
+    let id = e.getAttribute("data-id");
+    $.ajax({
+        type: "get",
+        url: "/increaseLikeCount/" + id,
+        success: function (res){
+            if (res.code == -1){
+                alert(res.message)
+            } else if (res.code == 200){
+                $("#likeCount"+id).text(res.data)
+            } else {
+                alert("服务器出了问题。。。")
+            }
+        }
+    })
+
+}
