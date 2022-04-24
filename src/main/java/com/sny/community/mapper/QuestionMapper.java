@@ -1,5 +1,7 @@
 package com.sny.community.mapper;
 
+import com.sny.community.dto.QuestionDTO;
+import com.sny.community.dto.QuestionQueryDTO;
 import com.sny.community.model.Question;
 import com.sny.community.model.QuestionExample;
 import java.util.List;

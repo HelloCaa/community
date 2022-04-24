@@ -2,6 +2,7 @@ package com.sny.community.service;
 
 import com.sny.community.dto.PaginationDTO;
 import com.sny.community.dto.QuestionDTO;
+import com.sny.community.dto.QuestionQueryDTO;
 import com.sny.community.exception.CustomizeErrorCode;
 import com.sny.community.exception.CustomizeException;
 import com.sny.community.mapper.QuestionExtMapper;
@@ -35,9 +36,18 @@ public class QuestionService {
     @Resource
     private UserMapper userMapper;
 
-    public PaginationDTO list(Integer page, Integer size){
+    public PaginationDTO list(String search, Integer page, Integer size){
+
+        if(StringUtils.isNoneBlank(search)){
+            String[] tags = StringUtils.split(search, " ");
+            search = Arrays.stream(tags).collect(Collectors.joining("|"));
+        }
+
+
         PaginationDTO<QuestionDTO> paginationDTO = new PaginationDTO();
-        Integer totalCount = (int)questionMapper.countByExample(new QuestionExample());
+        QuestionQueryDTO questionQueryDTO = new QuestionQueryDTO();
+        questionQueryDTO.setSearch(search);
+        Integer totalCount = questionExtMapper.countBySearch(questionQueryDTO);
         paginationDTO.setPagination(totalCount, size, page);
         //对page进行有效性验证
         if(page < 1){
@@ -53,7 +63,9 @@ public class QuestionService {
         //调用dao层获取数据
         QuestionExample questionExample = new QuestionExample();
         questionExample.setOrderByClause("gmt_create desc");
-        List<Question> questions = questionMapper.selectByExampleWithRowbounds(questionExample, new RowBounds(offset, size));
+        questionQueryDTO.setSize(size);
+        questionQueryDTO.setPage(offset);
+        List<Question> questions = questionExtMapper.selectBySearch(questionQueryDTO);
         List<QuestionDTO> questionDTOS = new ArrayList<>();
         for (Question question:questions
              ) {
