@@ -1,0 +1,13 @@
+2022-04-24 17:38:32.267  INFO 38750 --- [restartedMain] com.sny.community.CommunityApplication   : Starting CommunityApplication using Java 1.8.0_322 on chengningyideMacBook-Air.local with PID 38750 (/Users/shengningyi/IdeaProjects/community/target/classes started by shengningyi in /Users/shengningyi/IdeaProjects/community)
+2022-04-24 17:38:32.268  INFO 38750 --- [restartedMain] com.sny.community.CommunityApplication   : No active profile set, falling back to 1 default profile: "default"
+2022-04-24 17:38:32.291  INFO 38750 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2022-04-24 17:38:32.291  INFO 38750 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2022-04-24 17:38:32.792  INFO 38750 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8887 (http)
+2022-04-24 17:38:32.796  INFO 38750 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-04-24 17:38:32.797  INFO 38750 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.58]
+2022-04-24 17:38:32.827  INFO 38750 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-04-24 17:38:32.828  INFO 38750 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 537 ms
+2022-04-24 17:38:33.133  INFO 38750 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2022-04-24 17:38:33.217  INFO 38750 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2022-04-24 17:38:33.236  INFO 38750 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8887 (http) with context path ''
+2022-04-24 17:38:33.241  INFO 38750 --- [restartedMain] com.sny.community.CommunityApplication   : Started CommunityApplication in 1.152 seconds (JVM running for 1.562)
