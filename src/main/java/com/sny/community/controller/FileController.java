@@ -2,6 +2,7 @@ package com.sny.community.controller;
 
 import com.sny.community.dto.FileDTO;
 import com.sny.community.model.User;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,6 +17,8 @@ import java.util.UUID;
 
 @Controller
 public class FileController {
+    @Value("${uploadPath}")
+    String uploadPath;
     @RequestMapping("/file/upload")
     @ResponseBody
     public FileDTO upload(@RequestParam(value = "editormd-image-file", required = true) MultipartFile file, HttpServletRequest req){
@@ -25,7 +28,7 @@ public class FileController {
         String fileName = file.getOriginalFilename();  // 文件名
         String suffixName = fileName.substring(fileName.lastIndexOf("."));  // 后缀名
         fileName = UUID.randomUUID() + suffixName; // 新文件名
-        String filePath = "/Users/shengningyi/IdeaProjects/community/src/main/resources/static/img/";
+        String filePath = uploadPath;
         Calendar instance = Calendar.getInstance();
         String month = (instance.get(Calendar.MONTH) + 1)+"month/";
         User user = (User) req.getSession().getAttribute("user");
