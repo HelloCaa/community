@@ -2,6 +2,8 @@ package com.sny.community.controller;
 
 import com.sny.community.dto.PaginationDTO;
 import com.sny.community.service.QuestionService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,11 +12,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+
 @Controller
 public class IndexController {
 
     @Resource
     QuestionService questionService;
+
+    Logger logger = LoggerFactory.getLogger(IndexController.class);
 
     @GetMapping("/")
     public String hello(HttpServletRequest request,
@@ -27,6 +32,7 @@ public class IndexController {
         if ("".equals(search)){
             search = null;
         }
+        logger.info("---------------用户访问了---------------");
         PaginationDTO pagination = questionService.list(search, page, size);
         model.addAttribute("pagination", pagination);
         model.addAttribute("search", search);

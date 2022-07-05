@@ -24,13 +24,13 @@ public class CommentController {
 
     @ResponseBody
     @RequestMapping(value = "/comment", method = RequestMethod.POST)
-    public Object post(@RequestBody CommentCreateDTO commentCreateDTO, HttpServletRequest request){
+    public Object post(@RequestBody CommentCreateDTO commentCreateDTO, HttpServletRequest request) {
         User user = (User) request.getSession().getAttribute("user");
-        if(user == null){
+        if (user == null) {
             return ResultDTO.errorOf(CustomizeErrorCode.NO_LOGIN);
         }
 
-        if(commentCreateDTO == null || StringUtils.isBlank(commentCreateDTO.getContent())){
+        if (commentCreateDTO == null || StringUtils.isBlank(commentCreateDTO.getContent())) {
             return ResultDTO.errorOf(CustomizeErrorCode.CONTENT_IS_EMPTY);
         }
 
@@ -47,7 +47,7 @@ public class CommentController {
 
     @ResponseBody
     @RequestMapping(value = "/comment/{id}", method = RequestMethod.GET)
-    public ResultDTO<List<CommentDTO>> comments(@PathVariable(name = "id") Integer id){
+    public ResultDTO<List<CommentDTO>> comments(@PathVariable(name = "id") Integer id) {
         List<CommentDTO> commentDTOS = commentService.listByTargetId(id, CommentTypeEnum.COMMENT);
         return ResultDTO.okOf(commentDTOS);
     }

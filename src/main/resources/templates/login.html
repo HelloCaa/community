@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+    <meta name="renderer" content="webkit">
+    <title>社区</title>
+    <meta name="keywords" content="hi hi hi">
+    <meta name="description" content="学习使用，学习使用！！！">
+
+<!--    <link rel="stylesheet" type="text/css" href="https://elasticsearch.cn/static/css/bootstrap.css?v=4">-->
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+<!--    <link rel="stylesheet" type="text/css" href="https://elasticsearch.cn/static/css/icon.css?v=7">-->
+    <link rel="stylesheet" href="css/icon.css" />
+<!--    <link href="https://elasticsearch.cn/static/css/default/login.css?v=20151125" rel="stylesheet" type="text/css">-->
+    <link rel="stylesheet" href="css/login.css" />
+
+    <script src="https://hm.baidu.com/hm.js?e6293f1e557051599b149ca729a41cc0"></script><script type="text/javascript">
+    let _204B901F29E7F7CBE5FDE03C83F375DB="";
+    let G_POST_HASH=_204B901F29E7F7CBE5FDE03C83F375DB;
+    let G_INDEX_SCRIPT = "";
+    let G_SITE_NAME = "社区";
+    let G_USER_ID = "";
+    let G_USER_NAME = "";
+    let G_UPLOAD_ENABLE = "N";
+    let G_UNREAD_NOTIFICATION = 0;
+    let G_NOTIFICATION_INTERVAL = 100000;
+    let G_CAN_CREATE_TOPIC = "";
+    let G_EDITOR_MODE = "0";
+
+
+</script>
+    <script src="js/jQuery.js" type="application/javascript"></script>
+    <script src="js/bootstrap.min.js" type="application/javascript"></script>
+
+    <style type="text/css">.fancybox-margin{margin-right:0px;}</style></head>
+<body>
+<div id="wrapper">
+    <div class="aw-login-box">
+        <div class="mod-body clearfix">
+            <div class="content pull-left" style="text-align: center">
+                <a href="/"><img height="120px" style="background:#181413" src="images/logos/login.png" alt=""></a>
+                <h2 style="color: black">社区</h2>
+                <form id="login_form" method="post" onsubmit="return false" action="https://elasticsearch.cn/account/ajax/login_process/">
+                    <input type="hidden" name="return_url" value="">
+                    <ul style="list-style: none">
+                        <li >
+                            <input type="text" id="aw-login-user-name" class="form-control" placeholder="邮箱 / 用户名" name="user_name">
+                        </li>
+                        <li>
+                            <input type="password" id="aw-login-user-password" class="form-control" placeholder="密码" name="password">
+                        </li>
+                        <li class="alert alert-danger hide error_message">
+                            <i class="icon icon-delete"></i> <em></em>
+                        </li>
+                        <li class="last">
+                            <a href="javascript:;" onclick="AWS.ajax_post($('#login_form'), AWS.ajax_processer, 'error_message');" id="login_submit" class="pull-right btn btn-large btn-primary">登录</a>
+                        </li>
+                    </ul>
+                </form>
+            </div>
+            <div class="side-bar pull-left">
+
+                <h3>第三方账号登录</h3>
+
+
+
+
+
+
+                <a href="https://github.com/login/oauth/authorize?client_id=f974fcc78bfbc3ecff75&redirect_uri=http://localhost:8887/callback&scope=user&state=1" class="btn btn-block btn-github"> <i class="icon icon-github"></i> Github 登录</a>
+
+
+                <a target="_blank" href="http://elasticsearch.mikecrm.com/P3I77NC" class="btn btn-block btn-twitter"> <i class="icon icon-help"></i> 官方订阅&amp;支持</a>
+
+
+            </div>
+        </div>
+        <div class="mod-footer">
+            <span>还没有账号?</span>&nbsp;&nbsp;
+            <a href="/toRegister">立即注册</a>&nbsp;&nbsp;•&nbsp;&nbsp;
+            <a href="/">游客访问</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -42,7 +42,7 @@
                 <!--scope （用空格分隔的作用域列表。 如果未提供，对于未向应用程序授权任何作用域的用户，scope 将默认为空白列表。 对于已向应用程序授权作用域的用户，不会显示含作用域列表的 OAuth 授权页面。 相反，通过用户向应用程序授权的作用域集，此流程步骤将自动完成。 ）-->
                 <!--        例如，如果用户已执行两次 web 流程，且授权了一个拥有 user 作用域的令牌和一个拥有 repo 作用域的令牌，未提供 scope 的第三次 web 流程将收到拥有 user 和 repo 作用域的令牌。-->
                 <!--state (不可猜测的随机字符串。 它用于防止跨站请求伪造攻击。))-->                                                                          <!--//36.134.213.233:8888-->
-                <li th:if="${session.user == null}"><a href="https://github.com/login/oauth/authorize?client_id=f974fcc78bfbc3ecff75&redirect_uri=http://36.134.213.233:8888/callback&scope=user&state=1">登陆</a></li>
+                <li th:if="${session.user == null}"><a href="/toLogin">登陆</a></li>
             </ul>
         </div>
     </div>

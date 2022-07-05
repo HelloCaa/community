@@ -39,4 +39,18 @@ public class UserService {
             userMapper.updateByExampleSelective(updateUser, example);
         }
     }
+
+    public boolean queryUserByName(String userName) {
+        UserExample userExample = new UserExample();
+        userExample.createCriteria().andNameEqualTo(userName);
+        List<User> users = userMapper.selectByExample(userExample);
+        return users.size() == 0;
+    }
+
+    public boolean queryUserById(String loginId) {
+        UserExample userExample = new UserExample();
+        userExample.createCriteria().andAccountIdEqualTo(String.valueOf(loginId));
+        List<User> users = userMapper.selectByExample(userExample);
+        return users.size() == 0;
+    }
 }

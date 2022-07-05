@@ -150,5 +150,4 @@ function comment_click(e){
             }
         }
     })
-
 }
