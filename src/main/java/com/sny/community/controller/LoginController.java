@@ -1,7 +1,6 @@
 package com.sny.community.controller;
 
-import com.sny.community.dto.CommentCreateDTO;
-import com.sny.community.dto.RegisterDTO;
+import com.sny.community.dto.AccountDTO;
 import com.sny.community.dto.ResultDTO;
 import com.sny.community.model.User;
 import com.sny.community.service.UserService;
@@ -11,12 +10,13 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Controller
-public class TestController {
+public class LoginController {
     @Resource
     UserService userService;
 
@@ -37,7 +37,7 @@ public class TestController {
 
     @RequestMapping("/judgeUserName/{userName}")
     @ResponseBody
-    public ResultDTO judgeUserName(@PathVariable("userName") String userName) {
+    public ResultDTO<Boolean> judgeUserName(@PathVariable("userName") String userName) {
         ResultDTO<Boolean> resultDTO = new ResultDTO<>();
         if (userName == null || "".equals(userName) || userName.length() > 10 ) {
             resultDTO.setCode(400);
@@ -57,7 +57,7 @@ public class TestController {
 
     @RequestMapping("/judgeLoginId/{loginId}")
     @ResponseBody
-    public ResultDTO judgeLoginId(@PathVariable("loginId") String loginId) {
+    public ResultDTO<Boolean> judgeLoginId(@PathVariable("loginId") String loginId) {
         ResultDTO<Boolean> resultDTO = new ResultDTO<>();
         if (loginId == null || loginId.length() != 9 || !StringUtils.isNumeric(loginId)) {
             resultDTO.setCode(400);
@@ -77,23 +77,34 @@ public class TestController {
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     @ResponseBody
-    public ResultDTO register(@RequestBody RegisterDTO registerDTO){
+    public ResultDTO<Boolean> register(@RequestBody AccountDTO accountDTO){
         ResultDTO<Boolean> resultDTO = new ResultDTO<>();
-        if (registerDTO == null || registerDTO.getLoginId() == null || registerDTO.getPassword() == null){
+        if (accountDTO == null || accountDTO.getLoginId() == null || accountDTO.getPassword() == null){
             resultDTO.setCode(300);
             resultDTO.setMessage("注册失败");
             resultDTO.setData(false);
             return resultDTO;
         }
         User user = new User();
-        user.setName(registerDTO.getUserName());
-        user.setAccountId(registerDTO.getLoginId());
-        user.setToken(registerDTO.getPassword());
+        user.setName(accountDTO.getUserName());
+        user.setAccountId(accountDTO.getLoginId());
+        user.setToken(accountDTO.getPassword());
         user.setAvatarUrl("https://avatars.githubusercontent.com/u/66234989?v=4");
         userService.createOrUpdate(user);
         resultDTO.setCode(200);
         resultDTO.setData(true);
         resultDTO.setMessage("注册成功");
+        return resultDTO;
+    }
+
+    @PostMapping("/login")
+    @ResponseBody
+    public ResultDTO<Boolean> login(@RequestBody AccountDTO accountDTO, HttpServletResponse response){
+        ResultDTO<Boolean> resultDTO = new ResultDTO<>();
+        if (userService.queryUserByAccountIdAndPassword(accountDTO.getLoginId(), accountDTO.getPassword())){
+            resultDTO.setData(true);
+            response.addCookie((new Cookie("token", accountDTO.getPassword())));
+        }
         return resultDTO;
     }
 }

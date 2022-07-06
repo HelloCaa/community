@@ -34,6 +34,8 @@
 </script>
     <script src="js/jQuery.js" type="application/javascript"></script>
     <script src="js/bootstrap.min.js" type="application/javascript"></script>
+    <script src="js/login.js" type="application/javascript"></script>
+    <script src="js/md5.js" type="application/javascript"></script>
 
     <style type="text/css">.fancybox-margin{margin-right:0px;}</style></head>
 <body>
@@ -47,16 +49,16 @@
                     <input type="hidden" name="return_url" value="">
                     <ul style="list-style: none">
                         <li >
-                            <input type="text" id="aw-login-user-name" class="form-control" placeholder="邮箱 / 用户名" name="user_name">
+                            <input type="text" id="login_id" class="form-control" onblur="judgeId()" placeholder="账号ID" name="loginId">
                         </li>
                         <li>
-                            <input type="password" id="aw-login-user-password" class="form-control" placeholder="密码" name="password">
+                            <input type="password" id="password" class="form-control" placeholder="密码" name="password">
                         </li>
                         <li class="alert alert-danger hide error_message">
                             <i class="icon icon-delete"></i> <em></em>
                         </li>
                         <li class="last">
-                            <a href="javascript:;" onclick="AWS.ajax_post($('#login_form'), AWS.ajax_processer, 'error_message');" id="login_submit" class="pull-right btn btn-large btn-primary">登录</a>
+                            <a href="javascript:;" onclick="login();" id="login_submit" class="pull-right btn btn-large btn-primary">登录</a>
                         </li>
                     </ul>
                 </form>

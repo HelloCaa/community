@@ -53,4 +53,11 @@ public class UserService {
         List<User> users = userMapper.selectByExample(userExample);
         return users.size() == 0;
     }
+
+    public boolean queryUserByAccountIdAndPassword(String accountId, String pwd){
+        UserExample userExample = new UserExample();
+        userExample.createCriteria().andAccountIdEqualTo(accountId).andTokenEqualTo(pwd);
+        List<User> users = userMapper.selectByExample(userExample);
+        return users.size() == 1;
+    }
 }
