@@ -89,7 +89,7 @@ public class LoginController {
         user.setName(accountDTO.getUserName());
         user.setAccountId(accountDTO.getLoginId());
         user.setToken(accountDTO.getPassword());
-        user.setAvatarUrl("https://avatars.githubusercontent.com/u/66234989?v=4");
+        user.setAvatarUrl("https://elasticsearch.cn/static/common/avatar-max-img.png?rand=789");
         userService.createOrUpdate(user);
         resultDTO.setCode(200);
         resultDTO.setData(true);
@@ -103,7 +103,8 @@ public class LoginController {
         ResultDTO<Boolean> resultDTO = new ResultDTO<>();
         if (userService.queryUserByAccountIdAndPassword(accountDTO.getLoginId(), accountDTO.getPassword())){
             resultDTO.setData(true);
-            response.addCookie((new Cookie("token", accountDTO.getPassword())));
+            response.addCookie(new Cookie("token", accountDTO.getPassword()));
+            response.addCookie(new Cookie("accountId", accountDTO.getLoginId()));
         }
         return resultDTO;
     }

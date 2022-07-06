@@ -116,3 +116,7 @@ body{
     font-size: 12px;
     text-align: center;
 }
+
+.avatar {
+    margin-top: 5px;
+}

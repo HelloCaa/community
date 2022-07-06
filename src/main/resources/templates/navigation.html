@@ -25,6 +25,7 @@
                     <a href="/publish">提问</a>
                 </li>
                 <li><a href="/profile/replies">通知 <span class="badge" th:text="${session.unreadCount}"></span></a></li>
+                <li th:if="${session.user != null}"><img class="media-object img-rounded avatar" th:src="${session.user.getAvatarUrl()}">
                 <!--如果session里面有user，就显示"用户的name"-->
                 <li class="dropdown" th:if="${session.user != null}">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" >
@@ -34,6 +35,7 @@
                         <li><a href="/profile/questions">我的问题</a></li>
                         <li><a href="/logout">退出登陆</a>
                     </ul>
+                </li>
                 </li>
                 <!--如果session里面没有user，就跳转到github认证的接口"-->
                 <!--https://github.com/login/oauth/authorize github提供的对外认证api -->

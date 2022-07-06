@@ -71,6 +71,7 @@ public class AuthorizeController {
             userService.createOrUpdate(user);
             //登陆成功，将token写到用户浏览器的cookie中，以便用户下次访问
             response.addCookie(new Cookie("token", token));
+            response.addCookie(new Cookie("accountId", String.valueOf(gitHubUser.getId())));
             return "redirect:/";
         } else {
             log.error("callback get github error,{}",gitHubUser);

@@ -28,6 +28,7 @@ function validate(){
             success: function (res) {
                 if (res.code == 200){
                     alert("注册成功")
+                    window.location.href = '/toLogin'
                 } else {
                     alert("服务器好像出了点小问题。。。")
                 }
