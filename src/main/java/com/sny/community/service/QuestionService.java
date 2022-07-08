@@ -36,9 +36,9 @@ public class QuestionService {
     @Resource
     private UserMapper userMapper;
 
-    public PaginationDTO list(String search, Integer page, Integer size){
+    public PaginationDTO list(String search, Integer page, Integer size) {
 
-        if(StringUtils.isNoneBlank(search)){
+        if (StringUtils.isNoneBlank(search)) {
             String[] tags = StringUtils.split(search, " ");
             search = Arrays.stream(tags).collect(Collectors.joining("|"));
         }
@@ -50,10 +50,10 @@ public class QuestionService {
         Integer totalCount = questionExtMapper.countBySearch(questionQueryDTO);
         paginationDTO.setPagination(totalCount, size, page);
         //对page进行有效性验证
-        if(page < 1){
+        if (page < 1) {
             page = 1;
         }
-        if(page > paginationDTO.getTotalPage()){
+        if (page > paginationDTO.getTotalPage()) {
             page = paginationDTO.getTotalPage();
         }
 
@@ -61,14 +61,11 @@ public class QuestionService {
         Integer offset = size * (page - 1);
 
         //调用dao层获取数据
-        QuestionExample questionExample = new QuestionExample();
-        questionExample.setOrderByClause("gmt_create desc");
         questionQueryDTO.setSize(size);
         questionQueryDTO.setPage(offset);
         List<Question> questions = questionExtMapper.selectBySearch(questionQueryDTO);
         List<QuestionDTO> questionDTOS = new ArrayList<>();
-        for (Question question:questions
-             ) {
+        for (Question question : questions) {
             //通过question表的creator字段与user表的id（主键自增）字段整合数据
             User user = userMapper.selectByPrimaryKey(question.getCreator());
             QuestionDTO questionDTO = new QuestionDTO();
@@ -78,14 +75,14 @@ public class QuestionService {
             questionDTOS.add(questionDTO);
         }
         paginationDTO.setData(questionDTOS);
-        return  paginationDTO;
+        return paginationDTO;
     }
 
     public PaginationDTO list(Integer userId, Integer page, Integer size) {
         PaginationDTO<QuestionDTO> paginationDTO = new PaginationDTO();
         QuestionExample questionExample = new QuestionExample();
         questionExample.createCriteria().andCreatorEqualTo(userId);
-        Integer totalCount = (int)questionMapper.countByExample(questionExample);
+        Integer totalCount = (int) questionMapper.countByExample(questionExample);
         paginationDTO.setPagination(totalCount, size, page);
         page = paginationDTO.getPage();
         //page = size * (page - 1);
@@ -106,12 +103,12 @@ public class QuestionService {
             questionDTOS.add(questionDTO);
         }
         paginationDTO.setData(questionDTOS);
-        return  paginationDTO;
+        return paginationDTO;
     }
 
-    public QuestionDTO getById(Integer id){
+    public QuestionDTO getById(Integer id) {
         Question question = questionMapper.selectByPrimaryKey(id);
-        if (question == null){
+        if (question == null) {
             throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
         }
         QuestionDTO questionDTO = new QuestionDTO();
@@ -122,7 +119,7 @@ public class QuestionService {
     }
 
     public void createOrUpdate(Question question) {
-        if(question.getId() == -1){
+        if (question.getId() == -1) {
             //在数据库中创建新的问题数据
             question.setGmtCreate(System.currentTimeMillis());
             question.setGmtModified(question.getGmtCreate());
@@ -138,7 +135,7 @@ public class QuestionService {
             QuestionExample questionExample = new QuestionExample();
             questionExample.createCriteria().andIdEqualTo(question.getId());
             int updated = questionMapper.updateByExampleSelective(updateQuestion, questionExample);
-            if(updated != 1){
+            if (updated != 1) {
                 throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
             }
         }
@@ -152,7 +149,7 @@ public class QuestionService {
     }
 
     public List<QuestionDTO> selectRelated(QuestionDTO queryDTO) {
-        if(StringUtils.isBlank(queryDTO.getTag())){
+        if (StringUtils.isBlank(queryDTO.getTag())) {
             return new ArrayList<>();
         }
         String[] tags = StringUtils.split(queryDTO.getTag(), ",");

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sny.community.mapper.NotificationExtMapper">
+    <resultMap id="BaseResultMap" type="com.sny.community.model.Notification">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="notifier" jdbcType="INTEGER" property="notifier"/>
+        <result column="receiver" jdbcType="INTEGER" property="receiver"/>
+        <result column="outerId" jdbcType="INTEGER" property="outerid"/>
+        <result column="type" jdbcType="INTEGER" property="type"/>
+        <result column="gmt_create" jdbcType="BIGINT" property="gmtCreate"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="NOTIFIER_NAME" jdbcType="VARCHAR" property="notifierName"/>
+        <result column="OUTER_TITLE" jdbcType="VARCHAR" property="outerTitle"/>
+    </resultMap>
+
+    <select id="selectNotification" parameterType="com.sny.community.dto.NotificationQueryDTO"
+            resultMap="BaseResultMap">
+        select *
+        from notification
+        where receiver = #{userId}
+        order by gmt_create desc limit #{page}, #{size}
+    </select>
+
+</mapper>

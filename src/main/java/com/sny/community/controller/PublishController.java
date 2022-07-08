@@ -48,25 +48,30 @@ public class PublishController {
 
         //判断用在页面输入数据的有效性
         if(title == null || title == ""){
+            model.addAttribute("id", -1);
             model.addAttribute("error", "标题不能为空");
             return "publish";
         }
         if(description == null || description == ""){
+            model.addAttribute("id", -1);
             model.addAttribute("error", "问题补充不能为空");
             return "publish";
         }
         if(tag == null || tag == ""){
+            model.addAttribute("id", -1);
             model.addAttribute("error", "tag不能为空");
             return "publish";
         }
         String invalid = TagCache.filterInvalid(tag);
         if(!StringUtils.isBlank(invalid)){
+            model.addAttribute("id", -1);
             model.addAttribute("error", "输入非法标签:" + invalid);
             return "publish";
         }
         User user = (User) request.getSession().getAttribute("user");
 
         if(user == null){
+            model.addAttribute("id", -1);
             model.addAttribute("error", "用户未登陆");
             return "publish";
         }
