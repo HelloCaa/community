@@ -34,7 +34,6 @@ function comment2Target(targetId, type, content) {
                     if(isAccepted){
                         window.open("https://github.com/login/oauth/authorize?client_id=f974fcc78bfbc3ecff75&redirect_uri=http://localhost:8887/callback&scope=user&state=1")
                         window.localStorage.setItem("closable", "true");
-
                     }
                 }else {
                     alert(response.message);
