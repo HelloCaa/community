@@ -46,10 +46,11 @@
           <div class="media-body">
             <p class="media-heading" >
               <span th:text="${notification.notifierName+' '+notification.typeName+' '}" ></span>
-              <a th:href="@{'/notification/'+${notification.id}}"
+              <a style="font-size: large" th:href="@{'/notification/'+${notification.id}}"
                  th:text="${notification.outerTitle}">
               </a>
-              <span class="label label-danger" th:if="${notification.status == 0}">未读</span>
+                <sapn class="text-desc" style="margin-left: 10px" th:text="${#dates.format(notification.gmtCreate,'yyyy MMMM dd HH:mm')}"></sapn>
+                <span class="label label-danger" th:if="${notification.status == 0}">未读</span>
             </p>
           </div>
         </div>
