@@ -32,7 +32,7 @@ function comment2Target(targetId, type, content) {
                 if(response.code == 2003){
                     let isAccepted = confirm(response.message);
                     if(isAccepted){
-                        window.open("https://github.com/login/oauth/authorize?client_id=f974fcc78bfbc3ecff75&redirect_uri=http://localhost:8887/callback&scope=user&state=1")
+                        window.open("/toLogin")
                         window.localStorage.setItem("closable", "true");
                     }
                 }else {
