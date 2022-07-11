@@ -1,9 +1,9 @@
 package com.sny.community.controller;
 
-import com.sny.community.config.HotTagCache;
-import com.sny.community.dto.HotTagDTO;
+import com.sny.community.cache.HotTagCache;
 import com.sny.community.dto.PaginationDTO;
 import com.sny.community.service.QuestionService;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -17,12 +17,11 @@ import java.util.List;
 
 
 @Controller
+@Slf4j
 public class IndexController {
 
     @Resource
     QuestionService questionService;
-
-    Logger logger = LoggerFactory.getLogger(IndexController.class);
 
     @GetMapping("/")
     public String hello(HttpServletRequest request,
@@ -36,7 +35,10 @@ public class IndexController {
         if ("".equals(search)){
             search = null;
         }
-        logger.info("---------------用户访问了---------------");
+        if ("".equals(tag)){
+            tag = null;
+        }
+        log.info("hhhhhhahahahahahahh");
         PaginationDTO pagination = questionService.list(search, tag, page, size);
         List<String> tags = HotTagCache.getTopN();
         model.addAttribute("pagination", pagination);

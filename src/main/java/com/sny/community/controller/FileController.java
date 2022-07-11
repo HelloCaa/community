@@ -1,7 +1,10 @@
 package com.sny.community.controller;
 
+import com.aliyun.oss.OSSClient;
+import com.aliyun.oss.model.PutObjectRequest;
 import com.sny.community.dto.FileDTO;
 import com.sny.community.model.User;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,42 +15,67 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URLEncoder;
 import java.util.Calendar;
 import java.util.UUID;
 
+import static com.sny.community.config.AliyunConfig.*;
+
 @Controller
+@Slf4j
 public class FileController {
     @Value("${uploadPath}")
     String uploadPath;
+
     @RequestMapping("/file/upload")
     @ResponseBody
-    public FileDTO upload(@RequestParam(value = "editormd-image-file", required = true) MultipartFile file, HttpServletRequest req){
-        if (file.isEmpty()) {
-            System.out.println("文件为空");
-        }
-        String fileName = file.getOriginalFilename();  // 文件名
-        String suffixName = fileName.substring(fileName.lastIndexOf("."));  // 后缀名
-        fileName = UUID.randomUUID() + suffixName; // 新文件名
-        String filePath = uploadPath;
-        Calendar instance = Calendar.getInstance();
-        String month = (instance.get(Calendar.MONTH) + 1)+"month/";
-        User user = (User) req.getSession().getAttribute("user");
-        String userInfo = user.getId() + "_" + user.getName() + "/";
-        filePath = filePath + month + userInfo;
-        String pathname = filePath + fileName;
-        File dest = new File(pathname);
-        if (!dest.getParentFile().exists()) {
-            dest.getParentFile().mkdirs();
-        }
+    public FileDTO upload(@RequestParam(value = "editormd-image-file", required = true) MultipartFile file, HttpServletRequest req) {
+        String url = null;
         try {
-            file.transferTo(dest);
-        } catch (IOException e) {
-            e.printStackTrace();
+            // 创建OSS实例
+            OSSClient ossClient = new OSSClient(ENDPOINT, ACCESSKEYID, ACCESSKEYSECRET);
+            // 获取上传的文件的输入流
+            InputStream inputStream = file.getInputStream();
+            // 获取文件名称
+            String fileName = file.getOriginalFilename();
+            String encode = URLEncoder.encode(fileName);
+
+            // 在文件名称里面添加随机唯一值，使用UUID生成  把uuid生成里的-去掉
+            String uuid = UUID.randomUUID().toString().replaceAll("-", "");
+            fileName = uuid + fileName;
+            // 拼接fileName  PATH是oss文件夹
+            fileName = PATH + fileName;
+
+            /**
+             * 调用oss方法实现上传
+             * 第一个参数 Bucket名称
+             * 第二个参数 上传oss文件路径和名称 aa/bb/1.jpg
+             * 第三个参数 上传文件的输入流
+             */
+
+            //ossClient.putObject(BUCKETNAME, fileName, inputStream);   用这种方式putObject上传，拼接的url是下载！！！
+            //ossClient.shutdown();
+
+            PutObjectRequest putObjectRequest = new PutObjectRequest(BUCKETNAME, fileName, inputStream);
+            ossClient.putObject(putObjectRequest);
+
+//            PutObjectRequest putObjectRequest = new PutObjectRequest(BUCKETNAME, fileName, inputStream);
+//            ossClient.putObject(putObjectRequest);
+            // 关闭ossClient
+            ossClient.shutdown();
+            // 把上传到oss的路径返回
+            // 需要将路径手动拼接出来，https://xxxxxx.oss-cn-shanghai.aliyuncs.com/edu/avatar/girl.jpg
+            url = "https://" + BUCKETNAME + "." + ENDPOINT.substring(7) + "/" + PATH + uuid + encode;
+        } catch (Exception e) {
+            log.error("fileController:", e);
+            FileDTO fileDTO = new FileDTO();
+            fileDTO.setSuccess(0);
+            return fileDTO;
         }
         FileDTO fileDTO = new FileDTO();
         fileDTO.setSuccess(1);
-        String invented_address = req.getScheme()+"://"+req.getServerName()+":"+req.getServerPort() + "/files/" + month + userInfo + fileName;
-        fileDTO.setUrl(invented_address);
+        fileDTO.setUrl(url);
         return fileDTO;
     }
 }

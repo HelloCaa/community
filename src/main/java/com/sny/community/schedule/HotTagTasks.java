@@ -1,7 +1,6 @@
 package com.sny.community.schedule;
 
-import com.sny.community.cache.TagCache;
-import com.sny.community.config.HotTagCache;
+import com.sny.community.cache.HotTagCache;
 import com.sny.community.dto.HotTagDTO;
 import com.sny.community.mapper.QuestionMapper;
 import com.sny.community.model.Question;

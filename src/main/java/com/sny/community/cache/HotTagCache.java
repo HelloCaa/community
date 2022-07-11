@@ -1,4 +1,4 @@
-package com.sny.community.config;
+package com.sny.community.cache;
 
 import com.sny.community.dto.HotTagDTO;
 
