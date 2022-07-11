@@ -120,3 +120,11 @@ body{
 .avatar {
     margin-top: 5px;
 }
+
+.question-related {
+    line-height: 20px;
+    font-size: 18px;
+    margin-left: 0;
+    list-style: none;
+    padding-left: 0;
+}

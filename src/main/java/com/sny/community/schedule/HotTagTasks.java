@@ -29,7 +29,7 @@ public class HotTagTasks {
     QuestionMapper questionMapper;
 
     //    @Scheduled(cron = "0 0 6,19 * * *")
-    @Scheduled(fixedRate = 5000)
+    @Scheduled(fixedRate = 1000 * 60 * 60 * 2)
     public void hotTagSchedule() {
         int offSet = 0;
         int limit = 5;
@@ -63,13 +63,11 @@ public class HotTagTasks {
             }
             offSet += limit;
         }
-        LinkedList<HotTagDTO> hots = new LinkedList<>();
+        LinkedList<String> hots = new LinkedList<>();
         while (priorityQueue.size() != 0) {
-            hots.addFirst(priorityQueue.poll());
+            hots.addFirst(priorityQueue.poll().getName());
         }
-        for (HotTagDTO hot : hots) {
-            System.out.println(hot);
-        }
+        HotTagCache.setTopN(hots);
         log.info("HotSchedule stop {}", new Date());
     }
 }

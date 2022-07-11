@@ -20,7 +20,6 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.StringJoiner;
 import java.util.stream.Collectors;
 
 @Service
@@ -36,7 +35,7 @@ public class QuestionService {
     @Resource
     private UserMapper userMapper;
 
-    public PaginationDTO list(String search, Integer page, Integer size) {
+    public PaginationDTO list(String search, String tag, Integer page, Integer size) {
 
         if (StringUtils.isNoneBlank(search)) {
             String[] tags = StringUtils.split(search, " ");
@@ -47,6 +46,7 @@ public class QuestionService {
         PaginationDTO<QuestionDTO> paginationDTO = new PaginationDTO();
         QuestionQueryDTO questionQueryDTO = new QuestionQueryDTO();
         questionQueryDTO.setSearch(search);
+        questionQueryDTO.setTag(tag);
         Integer totalCount = questionExtMapper.countBySearch(questionQueryDTO);
         paginationDTO.setPagination(totalCount, size, page);
         //对page进行有效性验证

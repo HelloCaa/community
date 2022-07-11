@@ -27,7 +27,7 @@
   </update>
 
   <select id="selectRelated" parameterType="com.sny.community.model.Question" resultMap="BaseResultMap">
-    select * from question where id != #{id} and tag regexp #{tag}
+    select * from question where id != #{id} and tag regexp #{tag} order by gmt_create desc limit 10
   </select>
 
   <select id="countBySearch" parameterType="com.sny.community.dto.QuestionQueryDTO" resultType="java.lang.Integer">
@@ -35,6 +35,9 @@
     <where>
       <if test="search != null">
         and title regexp #{search}
+      </if>
+      <if test="tag != null">
+        and tag regexp #{tag}
       </if>
     </where>
   </select>
@@ -44,6 +47,9 @@
     <where>
       <if test="search != null">
         and title regexp #{search}
+      </if>
+      <if test="tag != null">
+        and tag regexp #{tag}
       </if>
     </where>
     order by gmt_create desc
