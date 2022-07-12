@@ -2,8 +2,8 @@ package com.sny.community.controller;
 
 import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.model.PutObjectRequest;
+import com.sny.community.config.AliyunConfig;
 import com.sny.community.dto.FileDTO;
-import com.sny.community.model.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -12,15 +12,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLEncoder;
-import java.util.Calendar;
 import java.util.UUID;
-
-import static com.sny.community.config.AliyunConfig.*;
 
 @Controller
 @Slf4j
@@ -28,13 +24,16 @@ public class FileController {
     @Value("${uploadPath}")
     String uploadPath;
 
+    @Resource
+    AliyunConfig aliyunConfig;
+
     @RequestMapping("/file/upload")
     @ResponseBody
     public FileDTO upload(@RequestParam(value = "editormd-image-file", required = true) MultipartFile file, HttpServletRequest req) {
         String url = null;
         try {
             // 创建OSS实例
-            OSSClient ossClient = new OSSClient(ENDPOINT, ACCESSKEYID, ACCESSKEYSECRET);
+            OSSClient ossClient = new OSSClient(aliyunConfig.getEndPoint(), aliyunConfig.getAccessKeyId(), aliyunConfig.getAccessKeySecret());
             // 获取上传的文件的输入流
             InputStream inputStream = file.getInputStream();
             // 获取文件名称
@@ -45,7 +44,7 @@ public class FileController {
             String uuid = UUID.randomUUID().toString().replaceAll("-", "");
             fileName = uuid + fileName;
             // 拼接fileName  PATH是oss文件夹
-            fileName = PATH + fileName;
+            fileName = aliyunConfig.getPath() + fileName;
 
             /**
              * 调用oss方法实现上传
@@ -57,7 +56,7 @@ public class FileController {
             //ossClient.putObject(BUCKETNAME, fileName, inputStream);   用这种方式putObject上传，拼接的url是下载！！！
             //ossClient.shutdown();
 
-            PutObjectRequest putObjectRequest = new PutObjectRequest(BUCKETNAME, fileName, inputStream);
+            PutObjectRequest putObjectRequest = new PutObjectRequest(aliyunConfig.getBucketName(), fileName, inputStream);
             ossClient.putObject(putObjectRequest);
 
 //            PutObjectRequest putObjectRequest = new PutObjectRequest(BUCKETNAME, fileName, inputStream);
@@ -66,7 +65,7 @@ public class FileController {
             ossClient.shutdown();
             // 把上传到oss的路径返回
             // 需要将路径手动拼接出来，https://xxxxxx.oss-cn-shanghai.aliyuncs.com/edu/avatar/girl.jpg
-            url = "https://" + BUCKETNAME + "." + ENDPOINT.substring(7) + "/" + PATH + uuid + encode;
+            url = "https://" + aliyunConfig.getBucketName() + "." + aliyunConfig.getEndPoint().substring(7) + "/" + aliyunConfig.getPath() + uuid + encode;
         } catch (Exception e) {
             log.error("fileController:", e);
             FileDTO fileDTO = new FileDTO();

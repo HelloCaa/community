@@ -1,15 +1,25 @@
 package com.sny.community.config;
 
+import lombok.Data;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.stereotype.Component;
+
+import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
+
 /**
  * @Author sny
  * @CreateTime 2022-07-11  17:43
  * @Description TODO
  * @Version 1.0
  */
+@Data
 public class AliyunConfig {
-    public static final String ENDPOINT = "http://oss-cn-hangzhou.aliyuncs.com";
-    public static final String ACCESSKEYID = "LTAI5tDQy4SDYW3YzoEYacC8";
-    public static final String ACCESSKEYSECRET = "tDiGj7pWpswrFu9y9b3HMPq9WQRnrZ";
-    public static final String BUCKETNAME = "community-sheng";
-    public static final String PATH = "community/image/";
+    public String endPoint;
+    public String accessKeyId;
+    public String accessKeySecret;
+    public String bucketName;
+    public String path;
 }
